@@ -24,6 +24,9 @@ final class SettingsViewController: NSViewController {
 
     private let clipboardToggle = NSSwitch()
     private let launchToggle    = NSSwitch()
+    private let autoStopToggle  = NSSwitch()
+    private let autoStopSlider  = NSSlider()
+    private let autoStopValueLabel = NSTextField(labelWithString: "7s")
 
     private let micStatusLabel  = NSTextField(labelWithString: "")
     private let axStatusLabel   = NSTextField(labelWithString: "")
@@ -39,7 +42,7 @@ final class SettingsViewController: NSViewController {
 
     override func loadView() {
         let bg = NSColor(white: 0.94, alpha: 1.0) // subtle light grey
-        let v = NSView(frame: NSRect(x: 0, y: 0, width: 380, height: 520))
+        let v = NSView(frame: NSRect(x: 0, y: 0, width: 380, height: 560))
         v.wantsLayer = true
         v.layer?.backgroundColor = bg.cgColor
         view = v
@@ -145,6 +148,31 @@ final class SettingsViewController: NSViewController {
 
         root.addArrangedSubview(toggleRow("Restore clipboard after paste", clipboardToggle))
         root.addArrangedSubview(toggleRow("Launch at Login", launchToggle))
+
+        // ── Auto-stop ────────────────────────────────────────────
+        autoStopToggle.controlSize = .small
+        autoStopToggle.target = self
+        autoStopToggle.action = #selector(autoStopToggleChanged)
+
+        autoStopSlider.minValue = 1.5
+        autoStopSlider.maxValue = 60.0
+        autoStopSlider.doubleValue = settings.autoStopDelay
+        autoStopSlider.controlSize = .small
+        autoStopSlider.target = self
+        autoStopSlider.action = #selector(autoStopSliderChanged)
+        autoStopSlider.isContinuous = true
+        autoStopSlider.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        autoStopValueLabel.font = .monospacedSystemFont(ofSize: 10, weight: .regular)
+        autoStopValueLabel.textColor = .secondaryLabelColor
+        autoStopValueLabel.alignment = .right
+        autoStopValueLabel.setContentHuggingPriority(.required, for: .horizontal)
+        pin(autoStopValueLabel, width: 32, height: 14)
+
+        root.addArrangedSubview(toggleRow("Auto-stop on silence", autoStopToggle))
+        let sliderRow = hstack([autoStopSlider, autoStopValueLabel], spacing: 6)
+        root.addArrangedSubview(sliderRow)
+
         root.addArrangedSubview(divider())
 
         // ── Permissions ──────────────────────────────────────────
@@ -338,6 +366,9 @@ final class SettingsViewController: NSViewController {
         }
         clipboardToggle.state = settings.restoreClipboard ? .on : .off
         launchToggle.state    = settings.launchAtLogin    ? .on : .off
+        autoStopToggle.state  = settings.autoStopEnabled  ? .on : .off
+        autoStopSlider.doubleValue = settings.autoStopDelay
+        updateAutoStopUI()
         if let key = KeychainStore.shared.apiKey() {
             apiKeyField.placeholderString = "Saved: \(String(key.prefix(8)))…"
         }
@@ -387,6 +418,30 @@ final class SettingsViewController: NSViewController {
     }
     @objc private func clipboardToggleChanged() { settings.restoreClipboard = clipboardToggle.state == .on }
     @objc private func launchToggleChanged()    { settings.launchAtLogin    = launchToggle.state == .on }
+
+    @objc private func autoStopToggleChanged() {
+        settings.autoStopEnabled = autoStopToggle.state == .on
+        updateAutoStopUI()
+    }
+    @objc private func autoStopSliderChanged() {
+        // Snap to 0.5s increments
+        let snapped = (autoStopSlider.doubleValue * 2).rounded() / 2
+        settings.autoStopDelay = snapped
+        updateAutoStopUI()
+    }
+    private func updateAutoStopUI() {
+        let enabled = settings.autoStopEnabled
+        autoStopSlider.isEnabled = enabled
+        autoStopValueLabel.isHidden = !enabled
+        if enabled {
+            let val = settings.autoStopDelay
+            if val >= 10 {
+                autoStopValueLabel.stringValue = "\(Int(val))s"
+            } else {
+                autoStopValueLabel.stringValue = String(format: "%.1fs", val)
+            }
+        }
+    }
     @objc private func openMicSettings()        { permissions.openMicrophoneSettings() }
     @objc private func openAXSettings()         { permissions.openAccessibilitySettings() }
 
