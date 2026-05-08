@@ -75,7 +75,10 @@ final class SessionCoordinator: ObservableObject {
             return
         }
 
-        silence.start()
+        silence.silenceDuration = settings.silenceTimerDuration
+        if settings.autoStopEnabled {
+            silence.start()
+        }
         startPeriodicFlush()
 
         state = .listening
@@ -99,7 +102,7 @@ final class SessionCoordinator: ObservableObject {
         audio.stop()
         sarvam.flush()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             self?.finalizeSession(reason: reason)
             // Play stop sound AFTER audio is fully torn down to prevent AudioQueue
             // teardown (~10 s later) from pulling down the shared audio session

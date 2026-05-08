@@ -22,8 +22,9 @@ final class SilenceDetector {
 
     weak var delegate: SilenceDetectorDelegate?
 
-    /// How long silence must be sustained before firing (seconds). Default 10s.
-    var silenceDuration: TimeInterval = 10.0
+    /// How long silence must be sustained before firing (seconds).
+    /// Set by SessionCoordinator from AppSettings before start().
+    var silenceDuration: TimeInterval = 5.5
 
     // MARK: - Private state
 
