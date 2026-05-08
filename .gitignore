@@ -1,0 +1,30 @@
+# LikhoLive — Git ignore
+
+# Xcode
+build/
+release/
+*.xcuserstate
+*.xcworkspace
+xcuserdata/
+DerivedData/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# Generated project (regenerate with: cd LikhoLive && xcodegen generate)
+# Keep project.yml, ignore generated .xcodeproj contents that change often
+LikhoLive/LikhoLive.xcodeproj/project.xcworkspace/
+LikhoLive/LikhoLive.xcodeproj/xcuserdata/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Secrets — never commit
+.env
+*.env.local
+# Debug logs and extra assets
+LikhoLive_AbruptStop_*.txt
+PadhoLive/
