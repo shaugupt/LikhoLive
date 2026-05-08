@@ -1,0 +1,419 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0371CB99FC935B49B0659D2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51A6EBC4509F9EACA12FB0C9 /* Assets.xcassets */; };
+		04D53E2C42914CFDCE94E111 /* LaunchAtLoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FDDC8BF02F1C6CF52E16AD /* LaunchAtLoginHelper.swift */; };
+		06E1257DAB3E5CA2EF9DCA59 /* PanelWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56013CEBE43C4583B4710451 /* PanelWindowController.swift */; };
+		2F30CFCB2E0B4C3457AED1AD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E742BB325641E7D69FD0DBF /* main.swift */; };
+		325E78C7558CE7BBC24E4CFA /* SecureFieldGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A52F34B9D2C2ED5B6328E37 /* SecureFieldGuard.swift */; };
+		3F993027D442D3E4569D7BA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ECA0CF47FF909F672CDC80 /* AppDelegate.swift */; };
+		47A61DFE449752FF75D905E5 /* FrontmostAppMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFAB94B2914CB2A6196EF47 /* FrontmostAppMonitor.swift */; };
+		4EBCAD8B6D9FA28D3B7AC599 /* TextInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5590DE1A20E46E98A608EA5C /* TextInjector.swift */; };
+		5AD321EBF4BCC54D8919131E /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC76979B87CDA1BC982E64BF /* KeychainStore.swift */; };
+		718170B73700C65DC24EB7EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F0DA8464DE79544419CD3A /* SettingsViewController.swift */; };
+		7BA79D7BEAECFF5A128737DB /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED2C120D59D645D18AD515B /* PermissionManager.swift */; };
+		7D26741A250B4EE54EA79086 /* SessionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE144DCBB147676C72FB9C21 /* SessionCoordinator.swift */; };
+		9132F9427A1FEBD71ABDD47D /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB2E16CFAD7387B9FBE6858 /* StatusBarController.swift */; };
+		95035942200F0137D16949BE /* SilenceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7290682659FB672C7FDED2D7 /* SilenceDetector.swift */; };
+		ADAE755EA8DC5D1CAFF1722C /* AudioCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */; };
+		D6851CF8F42528AC8BF98913 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */; };
+		E8880ADC8256017EDEA67108 /* SarvamStreamingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41535ED2E6F2360C432FAA7D /* SarvamStreamingClient.swift */; };
+		E9221A439BCF9E732B9E1892 /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCACEBC934E4D760EAD0D95 /* HotkeyManager.swift */; };
+		EDC04BAE8ABD5DA5FF6A2E09 /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E18059A4627A93C5D5ED3B /* HistoryStore.swift */; };
+		F746EC47D6EF37DDAB6DB203 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE3FB43FFF6060935FEBD8 /* AppState.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		01E18059A4627A93C5D5ED3B /* HistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
+		0BB2E16CFAD7387B9FBE6858 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
+		2E539DEBC4C501EBB4502FA0 /* LikhoLive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LikhoLive.entitlements; sourceTree = "<group>"; };
+		41535ED2E6F2360C432FAA7D /* SarvamStreamingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SarvamStreamingClient.swift; sourceTree = "<group>"; };
+		45ECA0CF47FF909F672CDC80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4A52F34B9D2C2ED5B6328E37 /* SecureFieldGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldGuard.swift; sourceTree = "<group>"; };
+		51A6EBC4509F9EACA12FB0C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		54F0DA8464DE79544419CD3A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		5590DE1A20E46E98A608EA5C /* TextInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInjector.swift; sourceTree = "<group>"; };
+		56013CEBE43C4583B4710451 /* PanelWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelWindowController.swift; sourceTree = "<group>"; };
+		5FEE3FB43FFF6060935FEBD8 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		7290682659FB672C7FDED2D7 /* SilenceDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilenceDetector.swift; sourceTree = "<group>"; };
+		7E742BB325641E7D69FD0DBF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		8BCACEBC934E4D760EAD0D95 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
+		8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCaptureService.swift; sourceTree = "<group>"; };
+		AC76979B87CDA1BC982E64BF /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		AFFAB94B2914CB2A6196EF47 /* FrontmostAppMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontmostAppMonitor.swift; sourceTree = "<group>"; };
+		BED2C120D59D645D18AD515B /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		DE144DCBB147676C72FB9C21 /* SessionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCoordinator.swift; sourceTree = "<group>"; };
+		F4FDDC8BF02F1C6CF52E16AD /* LaunchAtLoginHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginHelper.swift; sourceTree = "<group>"; };
+		F84C8D0BA1165B0B222BF34D /* LikhoLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LikhoLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1798DA7E5852E1AF61A34022 /* LikhoLive */ = {
+			isa = PBXGroup;
+			children = (
+				45ECA0CF47FF909F672CDC80 /* AppDelegate.swift */,
+				51A6EBC4509F9EACA12FB0C9 /* Assets.xcassets */,
+				7E742BB325641E7D69FD0DBF /* main.swift */,
+				95DCDE70B613BEEE737C3B36 /* Managers */,
+				EA71C3CE3EE165906E8B8F7B /* Models */,
+				D00DA4FAA0A9010959432DD6 /* Resources */,
+				E185803E25AC77F622DDF355 /* Services */,
+				5FA11CE4B6CDF6F778328B03 /* UI */,
+			);
+			path = LikhoLive;
+			sourceTree = "<group>";
+		};
+		5FA11CE4B6CDF6F778328B03 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				56013CEBE43C4583B4710451 /* PanelWindowController.swift */,
+				54F0DA8464DE79544419CD3A /* SettingsViewController.swift */,
+				0BB2E16CFAD7387B9FBE6858 /* StatusBarController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		70DC99A510ABEC88EF182B21 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F84C8D0BA1165B0B222BF34D /* LikhoLive.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		95DCDE70B613BEEE737C3B36 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				AFFAB94B2914CB2A6196EF47 /* FrontmostAppMonitor.swift */,
+				8BCACEBC934E4D760EAD0D95 /* HotkeyManager.swift */,
+				F4FDDC8BF02F1C6CF52E16AD /* LaunchAtLoginHelper.swift */,
+				BED2C120D59D645D18AD515B /* PermissionManager.swift */,
+				4A52F34B9D2C2ED5B6328E37 /* SecureFieldGuard.swift */,
+				5590DE1A20E46E98A608EA5C /* TextInjector.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		BFAFDB11FF43F87A1ECD1087 = {
+			isa = PBXGroup;
+			children = (
+				1798DA7E5852E1AF61A34022 /* LikhoLive */,
+				70DC99A510ABEC88EF182B21 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D00DA4FAA0A9010959432DD6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2E539DEBC4C501EBB4502FA0 /* LikhoLive.entitlements */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E185803E25AC77F622DDF355 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */,
+				01E18059A4627A93C5D5ED3B /* HistoryStore.swift */,
+				AC76979B87CDA1BC982E64BF /* KeychainStore.swift */,
+				41535ED2E6F2360C432FAA7D /* SarvamStreamingClient.swift */,
+				DE144DCBB147676C72FB9C21 /* SessionCoordinator.swift */,
+				7290682659FB672C7FDED2D7 /* SilenceDetector.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		EA71C3CE3EE165906E8B8F7B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */,
+				5FEE3FB43FFF6060935FEBD8 /* AppState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F92A4098545D9714A27DFB47 /* LikhoLive */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 420354E9C69B51D8CA0F40AA /* Build configuration list for PBXNativeTarget "LikhoLive" */;
+			buildPhases = (
+				41434B5C65173BBA6FD8F239 /* Sources */,
+				05C2147181E1B2FD473DDF93 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LikhoLive;
+			packageProductDependencies = (
+			);
+			productName = LikhoLive;
+			productReference = F84C8D0BA1165B0B222BF34D /* LikhoLive.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4F72DEF3E0F9FCE454E0980B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					F92A4098545D9714A27DFB47 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 2079FA5A4331346D22B47E54 /* Build configuration list for PBXProject "LikhoLive" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = BFAFDB11FF43F87A1ECD1087;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 70DC99A510ABEC88EF182B21 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F92A4098545D9714A27DFB47 /* LikhoLive */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		05C2147181E1B2FD473DDF93 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0371CB99FC935B49B0659D2C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		41434B5C65173BBA6FD8F239 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F993027D442D3E4569D7BA8 /* AppDelegate.swift in Sources */,
+				D6851CF8F42528AC8BF98913 /* AppSettings.swift in Sources */,
+				F746EC47D6EF37DDAB6DB203 /* AppState.swift in Sources */,
+				ADAE755EA8DC5D1CAFF1722C /* AudioCaptureService.swift in Sources */,
+				47A61DFE449752FF75D905E5 /* FrontmostAppMonitor.swift in Sources */,
+				EDC04BAE8ABD5DA5FF6A2E09 /* HistoryStore.swift in Sources */,
+				E9221A439BCF9E732B9E1892 /* HotkeyManager.swift in Sources */,
+				5AD321EBF4BCC54D8919131E /* KeychainStore.swift in Sources */,
+				04D53E2C42914CFDCE94E111 /* LaunchAtLoginHelper.swift in Sources */,
+				06E1257DAB3E5CA2EF9DCA59 /* PanelWindowController.swift in Sources */,
+				7BA79D7BEAECFF5A128737DB /* PermissionManager.swift in Sources */,
+				E8880ADC8256017EDEA67108 /* SarvamStreamingClient.swift in Sources */,
+				325E78C7558CE7BBC24E4CFA /* SecureFieldGuard.swift in Sources */,
+				7D26741A250B4EE54EA79086 /* SessionCoordinator.swift in Sources */,
+				718170B73700C65DC24EB7EB /* SettingsViewController.swift in Sources */,
+				95035942200F0137D16949BE /* SilenceDetector.swift in Sources */,
+				9132F9427A1FEBD71ABDD47D /* StatusBarController.swift in Sources */,
+				4EBCAD8B6D9FA28D3B7AC599 /* TextInjector.swift in Sources */,
+				2F30CFCB2E0B4C3457AED1AD /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		080D0AE64CFE609C8DF8E2E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_NAME = LikhoLive;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		182118DF13092A9743A047C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LikhoLive/Resources/LikhoLive.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LikhoLive/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shaugupt.LikhoLive;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		86422374897524E2EEDE3C5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LikhoLive/Resources/LikhoLive.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LikhoLive/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shaugupt.LikhoLive;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		8DC49DD31E027E7330A58B69 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_NAME = LikhoLive;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2079FA5A4331346D22B47E54 /* Build configuration list for PBXProject "LikhoLive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DC49DD31E027E7330A58B69 /* Debug */,
+				080D0AE64CFE609C8DF8E2E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		420354E9C69B51D8CA0F40AA /* Build configuration list for PBXNativeTarget "LikhoLive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				182118DF13092A9743A047C3 /* Debug */,
+				86422374897524E2EEDE3C5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4F72DEF3E0F9FCE454E0980B /* Project object */;
+}
