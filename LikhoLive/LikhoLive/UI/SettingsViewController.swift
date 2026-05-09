@@ -146,7 +146,7 @@ final class SettingsViewController: NSViewController {
         launchToggle.target = self
         launchToggle.action = #selector(launchToggleChanged)
 
-        root.addArrangedSubview(toggleRow("Restore clipboard after paste", clipboardToggle))
+        root.addArrangedSubview(toggleRow("Restore clipboard after inject", clipboardToggle))
         root.addArrangedSubview(toggleRow("Launch at Login", launchToggle))
 
         // ── Auto-stop ────────────────────────────────────────────
