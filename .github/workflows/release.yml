@@ -42,23 +42,23 @@ jobs:
         run: |
           /usr/libexec/PlistBuddy \
             -c "Set :CFBundleShortVersionString ${{ steps.version.outputs.VERSION }}" \
-            build/Release/LikhoLive.app/Contents/Info.plist
+            LikhoLive/build/Release/LikhoLive.app/Contents/Info.plist
           /usr/libexec/PlistBuddy \
             -c "Set :CFBundleVersion ${{ steps.version.outputs.VERSION }}" \
-            build/Release/LikhoLive.app/Contents/Info.plist
+            LikhoLive/build/Release/LikhoLive.app/Contents/Info.plist
 
       - name: Create ZIP
         run: |
           mkdir -p release
           ditto -c -k --keepParent \
-            build/Release/LikhoLive.app \
+            LikhoLive/build/Release/LikhoLive.app \
             release/LikhoLive-${{ steps.version.outputs.VERSION }}.zip
 
       - name: Create DMG
         run: |
           hdiutil create \
             -volname "LikhoLive ${{ steps.version.outputs.VERSION }}" \
-            -srcfolder build/Release/LikhoLive.app \
+            -srcfolder LikhoLive/build/Release/LikhoLive.app \
             -ov \
             -format UDZO \
             release/LikhoLive-${{ steps.version.outputs.VERSION }}.dmg
