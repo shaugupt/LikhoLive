@@ -9,13 +9,11 @@ Real-time multilingual speech-to-text for macOS — lives in your menu bar, type
 ## Screenshots
 
 <p align="center">
-  <img src="LikhoLive/Screenshots/screenshot-1.png" width="380" alt="LikhoLive panel – idle">
-  <img src="LikhoLive/Screenshots/screenshot-2.png" width="380" alt="LikhoLive panel – listening">
-</p>
-<p align="center">
-  <img src="LikhoLive/Screenshots/screenshot-3.png" width="380" alt="LikhoLive panel – settings">
-  <img src="LikhoLive/Screenshots/screenshot-4.png" width="380" alt="LikhoLive panel – transcript">
-  <img src="LikhoLive/Screenshots/screenshot-5.png" width="380" alt="LikhoLive panel – permissions">
+  <img src="LikhoLive/Screenshots/screenshot-1.png" width="190" alt="Idle">
+  <img src="LikhoLive/Screenshots/screenshot-2.png" width="190" alt="Listening">
+  <img src="LikhoLive/Screenshots/screenshot-3.png" width="190" alt="Settings">
+  <img src="LikhoLive/Screenshots/screenshot-4.png" width="190" alt="Transcript">
+  <img src="LikhoLive/Screenshots/screenshot-5.png" width="190" alt="Permissions">
 </p>
 
 ---
