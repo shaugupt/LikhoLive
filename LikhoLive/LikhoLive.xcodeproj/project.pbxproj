@@ -13,7 +13,6 @@
 		2F30CFCB2E0B4C3457AED1AD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E742BB325641E7D69FD0DBF /* main.swift */; };
 		325E78C7558CE7BBC24E4CFA /* SecureFieldGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A52F34B9D2C2ED5B6328E37 /* SecureFieldGuard.swift */; };
 		3F993027D442D3E4569D7BA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ECA0CF47FF909F672CDC80 /* AppDelegate.swift */; };
-		47A61DFE449752FF75D905E5 /* FrontmostAppMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFAB94B2914CB2A6196EF47 /* FrontmostAppMonitor.swift */; };
 		4EBCAD8B6D9FA28D3B7AC599 /* TextInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5590DE1A20E46E98A608EA5C /* TextInjector.swift */; };
 		5AD321EBF4BCC54D8919131E /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC76979B87CDA1BC982E64BF /* KeychainStore.swift */; };
 		718170B73700C65DC24EB7EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F0DA8464DE79544419CD3A /* SettingsViewController.swift */; };
@@ -47,7 +46,6 @@
 		8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCaptureService.swift; sourceTree = "<group>"; };
 		AC76979B87CDA1BC982E64BF /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
-		AFFAB94B2914CB2A6196EF47 /* FrontmostAppMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontmostAppMonitor.swift; sourceTree = "<group>"; };
 		BED2C120D59D645D18AD515B /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		DE144DCBB147676C72FB9C21 /* SessionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCoordinator.swift; sourceTree = "<group>"; };
 		F4FDDC8BF02F1C6CF52E16AD /* LaunchAtLoginHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginHelper.swift; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 		95DCDE70B613BEEE737C3B36 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				AFFAB94B2914CB2A6196EF47 /* FrontmostAppMonitor.swift */,
 				8BCACEBC934E4D760EAD0D95 /* HotkeyManager.swift */,
 				F4FDDC8BF02F1C6CF52E16AD /* LaunchAtLoginHelper.swift */,
 				BED2C120D59D645D18AD515B /* PermissionManager.swift */,
@@ -214,7 +211,6 @@
 				D6851CF8F42528AC8BF98913 /* AppSettings.swift in Sources */,
 				F746EC47D6EF37DDAB6DB203 /* AppState.swift in Sources */,
 				ADAE755EA8DC5D1CAFF1722C /* AudioCaptureService.swift in Sources */,
-				47A61DFE449752FF75D905E5 /* FrontmostAppMonitor.swift in Sources */,
 				EDC04BAE8ABD5DA5FF6A2E09 /* HistoryStore.swift in Sources */,
 				E9221A439BCF9E732B9E1892 /* HotkeyManager.swift in Sources */,
 				5AD321EBF4BCC54D8919131E /* KeychainStore.swift in Sources */,
