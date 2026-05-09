@@ -28,3 +28,5 @@ LikhoLive/LikhoLive.xcodeproj/xcuserdata/
 # Debug logs and extra assets
 LikhoLive_AbruptStop_*.txt
 PadhoLive/
+# Original macOS screenshot filenames (space-in-name variants kept out)
+LikhoLive/Screenshots/Screenshot\ *

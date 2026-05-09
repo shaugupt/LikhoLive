@@ -6,6 +6,20 @@ Real-time multilingual speech-to-text for macOS — lives in your menu bar, type
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="LikhoLive/Screenshots/screenshot-1.png" width="380" alt="LikhoLive panel – idle">
+  <img src="LikhoLive/Screenshots/screenshot-2.png" width="380" alt="LikhoLive panel – listening">
+</p>
+<p align="center">
+  <img src="LikhoLive/Screenshots/screenshot-3.png" width="380" alt="LikhoLive panel – settings">
+  <img src="LikhoLive/Screenshots/screenshot-4.png" width="380" alt="LikhoLive panel – transcript">
+  <img src="LikhoLive/Screenshots/screenshot-5.png" width="380" alt="LikhoLive panel – permissions">
+</p>
+
+---
+
 ## Why I Built This
 
 macOS Dictation works, but only if you're writing in English. The moment you switch to Hindi, Hinglish, or any other Indian language, it falls flat. I needed something that could handle multilingual input — with transliteration, code-mixing, and real translation — and type the result directly into whatever I was working in.
