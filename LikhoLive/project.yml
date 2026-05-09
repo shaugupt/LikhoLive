@@ -51,7 +51,7 @@ targets:
         LSUIElement: true
         NSMicrophoneUsageDescription: "LikhoLive needs microphone access to transcribe your speech in real time."
         NSPrincipalClass: NSApplication
-        NSHumanReadableCopyright: "© 2025 Shaugufta. All rights reserved."
+        NSHumanReadableCopyright: "© 2026 shaugupt. All rights reserved."
         LSMinimumSystemVersion: "13.0"
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: false

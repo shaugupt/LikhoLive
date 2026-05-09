@@ -10,9 +10,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Hide from Dock — menu bar only app
         NSApp.setActivationPolicy(.accessory)
 
-        // Bootstrap Sarvam API key from reference project on first launch
-        KeychainStore.shared.bootstrapIfNeeded()
-
         // Apply Launch at Login setting
         LaunchAtLoginHelper.setEnabled(AppSettings.shared.launchAtLogin)
 

@@ -65,29 +65,4 @@ final class KeychainStore {
         return SecItemDelete(query as CFDictionary) == errSecSuccess
     }
 
-    // MARK: - Bootstrap
-
-    /// On first launch, imports the API key from the reference .env file.
-    /// After import, the key lives only in Keychain; the .env is never modified.
-    func bootstrapIfNeeded() {
-        guard apiKey() == nil else { return }
-
-        let envPath = NSString(string: "~/Personal/Sarvam/.env").expandingTildeInPath
-        guard let contents = try? String(contentsOfFile: envPath, encoding: .utf8) else { return }
-
-        for line in contents.components(separatedBy: .newlines) {
-            let trimmed = line.trimmingCharacters(in: .whitespaces)
-            if trimmed.hasPrefix("SARVAM_API_KEY=") {
-                var value = String(trimmed.dropFirst("SARVAM_API_KEY=".count))
-                // Strip surrounding quotes if present
-                if value.hasPrefix("\"") && value.hasSuffix("\"") {
-                    value = String(value.dropFirst().dropLast())
-                }
-                if !value.isEmpty {
-                    save(apiKey: value)
-                }
-                return
-            }
-        }
-    }
 }
