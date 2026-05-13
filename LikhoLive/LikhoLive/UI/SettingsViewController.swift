@@ -19,9 +19,24 @@ final class SettingsViewController: NSViewController {
     private let transcriptText  = NSTextView()
     private var transcriptScroll: NSScrollView!
 
+    // ── Engine picker ────────────────────────────────────────────
+    private let enginePopup = NSPopUpButton()
+
+    // ── Sarvam-only section (visible when engine == .sarvam) ─────
+    private var sarvamContainer: NSStackView!
     private let modePopup       = NSPopUpButton()
     private let langPopup       = NSPopUpButton()
+    private let apiKeyField     = NSSecureTextField()
+    private let apiKeySaveBtn   = NSButton()
 
+    // ── Whisper-only section (visible when engine == .whisper) ───
+    private var whisperContainer: NSStackView!
+    private let whisperModePopup = NSPopUpButton()
+    private let whisperLangPopup = NSPopUpButton()
+    private let whisperModelLabel = NSTextField(labelWithString: "")
+    private let manageModelsBtn   = NSButton()
+
+    // ── Always-visible rows ──────────────────────────────────────
     private let clipboardToggle = NSSwitch()
     private let launchToggle    = NSSwitch()
     private let autoStopToggle  = NSSwitch()
@@ -32,12 +47,6 @@ final class SettingsViewController: NSViewController {
     private let axStatusLabel   = NSTextField(labelWithString: "")
     private let micButton       = NSButton()
     private let axButton        = NSButton()
-
-    private let apiKeyField     = NSSecureTextField()
-    private let apiKeySaveBtn   = NSButton()
-
-    private let whisperModelLabel = NSTextField(labelWithString: "")
-    private let manageModelsBtn   = NSButton()
 
     private let historyTable    = NSTableView()
 
@@ -117,7 +126,78 @@ final class SettingsViewController: NSViewController {
 
         root.addArrangedSubview(divider())
 
-        // ── Mode + Language ──────────────────────────────────────
+        // ── Engine picker ─────────────────────────────────────────
+        for engine in Engine.allCases {
+            enginePopup.addItem(withTitle: engine.displayName)
+            enginePopup.lastItem?.representedObject = engine
+        }
+        enginePopup.controlSize = .small
+        enginePopup.font = .systemFont(ofSize: 11)
+        enginePopup.target = self
+        enginePopup.action = #selector(engineChanged)
+        root.addArrangedSubview(labelRow("Engine", enginePopup))
+        root.addArrangedSubview(divider())
+
+        // ── Whisper section ───────────────────────────────────────
+        whisperContainer = vstack(spacing: 8)
+        whisperContainer.alignment = .leading
+
+        whisperModelLabel.font = .systemFont(ofSize: 11)
+        whisperModelLabel.textColor = .labelColor
+        whisperModelLabel.lineBreakMode = .byTruncatingTail
+        whisperModelLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        manageModelsBtn.title = "Manage…"
+        manageModelsBtn.bezelStyle = .rounded
+        manageModelsBtn.controlSize = .small
+        manageModelsBtn.font = .systemFont(ofSize: 11)
+        manageModelsBtn.target = self
+        manageModelsBtn.action = #selector(openModelManager)
+        manageModelsBtn.setContentHuggingPriority(.required, for: .horizontal)
+
+        whisperContainer.addArrangedSubview(hstack([whisperModelLabel, manageModelsBtn], spacing: 6))
+
+        for m in WhisperMode.allCases {
+            whisperModePopup.addItem(withTitle: m.rawValue)
+            whisperModePopup.lastItem?.representedObject = m
+        }
+        whisperModePopup.controlSize = .small
+        whisperModePopup.font = .systemFont(ofSize: 11)
+        whisperModePopup.target = self
+        whisperModePopup.action = #selector(whisperModeChanged)
+
+        for lang in WhisperLanguage.all {
+            whisperLangPopup.addItem(withTitle: lang.displayName)
+            whisperLangPopup.lastItem?.representedObject = lang
+        }
+        whisperLangPopup.controlSize = .small
+        whisperLangPopup.font = .systemFont(ofSize: 11)
+        whisperLangPopup.target = self
+        whisperLangPopup.action = #selector(whisperLanguageChanged)
+
+        whisperContainer.addArrangedSubview(labelRow("Mode", whisperModePopup))
+        whisperContainer.addArrangedSubview(labelRow("Language", whisperLangPopup))
+        root.addArrangedSubview(whisperContainer)
+
+        // ── Sarvam section ────────────────────────────────────────
+        sarvamContainer = vstack(spacing: 8)
+        sarvamContainer.alignment = .leading
+
+        apiKeyField.placeholderString = "sk_…"
+        apiKeyField.font = .monospacedSystemFont(ofSize: 11, weight: .regular)
+        apiKeyField.controlSize = .small
+        apiKeyField.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        apiKeySaveBtn.title = "Save"
+        apiKeySaveBtn.bezelStyle = .rounded
+        apiKeySaveBtn.controlSize = .small
+        apiKeySaveBtn.font = .systemFont(ofSize: 11)
+        apiKeySaveBtn.target = self
+        apiKeySaveBtn.action = #selector(saveAPIKey)
+        apiKeySaveBtn.setContentHuggingPriority(.required, for: .horizontal)
+
+        sarvamContainer.addArrangedSubview(labeledField("API Key", apiKeyField, apiKeySaveBtn))
+
         for m in SarvamMode.allCases {
             modePopup.addItem(withTitle: m.rawValue)
             modePopup.lastItem?.representedObject = m
@@ -136,8 +216,10 @@ final class SettingsViewController: NSViewController {
         langPopup.target = self
         langPopup.action = #selector(languageChanged)
 
-        root.addArrangedSubview(labelRow("Mode", modePopup))
-        root.addArrangedSubview(labelRow("Language", langPopup))
+        sarvamContainer.addArrangedSubview(labelRow("Mode", modePopup))
+        sarvamContainer.addArrangedSubview(labelRow("Language", langPopup))
+        root.addArrangedSubview(sarvamContainer)
+
         root.addArrangedSubview(divider())
 
         // ── Toggles ──────────────────────────────────────────────
@@ -200,40 +282,6 @@ final class SettingsViewController: NSViewController {
 
         root.addArrangedSubview(hstack([micStatusLabel, micButton], spacing: 6))
         root.addArrangedSubview(hstack([axStatusLabel,  axButton],  spacing: 6))
-        root.addArrangedSubview(divider())
-
-        // ── API Key ───────────────────────────────────────────────
-        apiKeyField.placeholderString = "sk_…"
-        apiKeyField.font = .monospacedSystemFont(ofSize: 11, weight: .regular)
-        apiKeyField.controlSize = .small
-        apiKeyField.setContentHuggingPriority(.defaultLow, for: .horizontal)
-
-        apiKeySaveBtn.title = "Save"
-        apiKeySaveBtn.bezelStyle = .rounded
-        apiKeySaveBtn.controlSize = .small
-        apiKeySaveBtn.font = .systemFont(ofSize: 11)
-        apiKeySaveBtn.target = self
-        apiKeySaveBtn.action = #selector(saveAPIKey)
-        apiKeySaveBtn.setContentHuggingPriority(.required, for: .horizontal)
-
-        root.addArrangedSubview(labeledField("API Key", apiKeyField, apiKeySaveBtn))
-        root.addArrangedSubview(divider())
-
-        // ── Whisper Models ────────────────────────────────────────
-        whisperModelLabel.font = .systemFont(ofSize: 11)
-        whisperModelLabel.textColor = .labelColor
-        whisperModelLabel.lineBreakMode = .byTruncatingTail
-        whisperModelLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-
-        manageModelsBtn.title = "Manage…"
-        manageModelsBtn.bezelStyle = .rounded
-        manageModelsBtn.controlSize = .small
-        manageModelsBtn.font = .systemFont(ofSize: 11)
-        manageModelsBtn.target = self
-        manageModelsBtn.action = #selector(openModelManager)
-        manageModelsBtn.setContentHuggingPriority(.required, for: .horizontal)
-
-        root.addArrangedSubview(hstack([whisperModelLabel, manageModelsBtn], spacing: 6))
         root.addArrangedSubview(divider())
 
         // ── History ───────────────────────────────────────────────
@@ -386,6 +434,11 @@ final class SettingsViewController: NSViewController {
     // MARK: - Populate
 
     private func populate() {
+        for (i, item) in enginePopup.itemArray.enumerated() {
+            if let e = item.representedObject as? Engine, e == settings.engine {
+                enginePopup.selectItem(at: i); break
+            }
+        }
         for (i, item) in modePopup.itemArray.enumerated() {
             if let m = item.representedObject as? SarvamMode, m == settings.mode {
                 modePopup.selectItem(at: i); break
@@ -394,6 +447,16 @@ final class SettingsViewController: NSViewController {
         for (i, item) in langPopup.itemArray.enumerated() {
             if let l = item.representedObject as? SarvamLanguage, l.id == settings.languageCode {
                 langPopup.selectItem(at: i); break
+            }
+        }
+        for (i, item) in whisperModePopup.itemArray.enumerated() {
+            if let m = item.representedObject as? WhisperMode, m == settings.whisperMode {
+                whisperModePopup.selectItem(at: i); break
+            }
+        }
+        for (i, item) in whisperLangPopup.itemArray.enumerated() {
+            if let l = item.representedObject as? WhisperLanguage, l.id == settings.whisperLanguageCode {
+                whisperLangPopup.selectItem(at: i); break
             }
         }
         clipboardToggle.state = settings.restoreClipboard ? .on : .off
@@ -406,6 +469,16 @@ final class SettingsViewController: NSViewController {
         }
         updateWhisperModelLabel()
         updatePermissionRows()
+        updateEngineVisibility()
+    }
+
+    /// Show only the rows belonging to the currently-selected engine.
+    /// NSStackView collapses hidden arranged subviews automatically, so the
+    /// panel re-flows tightly with no leftover gaps.
+    private func updateEngineVisibility() {
+        let isWhisper = settings.engine == .whisper
+        whisperContainer.isHidden = !isWhisper
+        sarvamContainer.isHidden  = isWhisper
     }
 
     private func updateWhisperModelLabel() {
@@ -427,6 +500,9 @@ final class SettingsViewController: NSViewController {
         case .error:           statusDot.layer?.backgroundColor = NSColor.systemRed.cgColor
         }
         startStopButton.isEnabled = permissions.allPermissionsGranted
+        // Engine swap mid-session would tear down a pipeline that's actively
+        // delivering audio, so we lock the picker while listening/finalizing.
+        enginePopup.isEnabled = !state.isActive
         updatePermissionRows()
         historyTable.reloadData()
     }
@@ -450,6 +526,25 @@ final class SettingsViewController: NSViewController {
     @objc private func toggleDictation() {
         if coordinator.state.isActive { coordinator.stopSession() } else { coordinator.startSession() }
     }
+    @objc private func engineChanged() {
+        guard let e = enginePopup.selectedItem?.representedObject as? Engine else { return }
+        // Disallow switching during an active session — revert the picker.
+        guard !coordinator.state.isActive else {
+            for (i, item) in enginePopup.itemArray.enumerated() {
+                if let cur = item.representedObject as? Engine, cur == settings.engine {
+                    enginePopup.selectItem(at: i); break
+                }
+            }
+            return
+        }
+        coordinator.switchEngine(to: e)
+        updateEngineVisibility()
+        // If switching to Whisper for the first time and no model is installed,
+        // nudge the user toward the model manager so they can download one.
+        if e == .whisper && ModelManager.shared.installedIDs.isEmpty {
+            ModelManagerWindowController.shared.showAndFocus()
+        }
+    }
     @objc private func modeChanged() {
         guard let m = modePopup.selectedItem?.representedObject as? SarvamMode else { return }
         settings.mode = m
@@ -457,6 +552,14 @@ final class SettingsViewController: NSViewController {
     @objc private func languageChanged() {
         guard let l = langPopup.selectedItem?.representedObject as? SarvamLanguage else { return }
         settings.languageCode = l.id
+    }
+    @objc private func whisperModeChanged() {
+        guard let m = whisperModePopup.selectedItem?.representedObject as? WhisperMode else { return }
+        settings.whisperMode = m
+    }
+    @objc private func whisperLanguageChanged() {
+        guard let l = whisperLangPopup.selectedItem?.representedObject as? WhisperLanguage else { return }
+        settings.whisperLanguageCode = l.id
     }
     @objc private func clipboardToggleChanged() { settings.restoreClipboard = clipboardToggle.state == .on }
     @objc private func launchToggleChanged()    { settings.launchAtLogin    = launchToggle.state == .on }

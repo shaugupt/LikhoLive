@@ -61,6 +61,40 @@ enum WhisperMode: String, CaseIterable, Codable {
 /// Stored in `AppSettings.whisperLanguageCode` as the default.
 let whisperLanguageAuto = "auto"
 
+/// A subset of whisper.cpp's ~99 supported languages. We surface the
+/// languages most relevant to the LikhoLive audience (auto + Indian languages
+/// + a handful of widely-used non-Indian ones). Whisper accepts ISO 639-1
+/// where applicable; "auto" maps to nil (auto-detect) on the wrapper.
+struct WhisperLanguage: Identifiable, Equatable {
+    let id: String          // ISO code stored and passed to whisper, or "auto"
+    let displayName: String
+
+    static let all: [WhisperLanguage] = [
+        .init(id: whisperLanguageAuto, displayName: "Auto-detect"),
+        .init(id: "en",  displayName: "English"),
+        .init(id: "hi",  displayName: "Hindi"),
+        .init(id: "bn",  displayName: "Bengali"),
+        .init(id: "gu",  displayName: "Gujarati"),
+        .init(id: "kn",  displayName: "Kannada"),
+        .init(id: "ml",  displayName: "Malayalam"),
+        .init(id: "mr",  displayName: "Marathi"),
+        .init(id: "pa",  displayName: "Punjabi"),
+        .init(id: "ta",  displayName: "Tamil"),
+        .init(id: "te",  displayName: "Telugu"),
+        .init(id: "ur",  displayName: "Urdu"),
+        .init(id: "ne",  displayName: "Nepali"),
+        .init(id: "sa",  displayName: "Sanskrit"),
+        .init(id: "es",  displayName: "Spanish"),
+        .init(id: "fr",  displayName: "French"),
+        .init(id: "de",  displayName: "German"),
+        .init(id: "ja",  displayName: "Japanese"),
+        .init(id: "zh",  displayName: "Chinese"),
+        .init(id: "ar",  displayName: "Arabic"),
+    ]
+
+    static let defaultLanguage = WhisperLanguage.all[0] // auto
+}
+
 /// All five Sarvam saaras:v3 modes, using exact Sarvam terminology.
 enum SarvamMode: String, CaseIterable, Codable {
     case transcribe
@@ -130,23 +164,45 @@ struct TranscriptSegment: Identifiable, Codable {
     }
 }
 
-/// A completed session stored in history.
+/// A completed session stored in history. Engine-agnostic: `mode` is the raw
+/// string of whichever per-engine mode enum was active (`SarvamMode` or
+/// `WhisperMode`). Pre-v2 sessions on disk had no `engine` field; the custom
+/// decoder backfills `.sarvam` for those so existing history loads cleanly.
 struct TranscriptSession: Identifiable, Codable {
     let id: UUID
     let date: Date
     let segments: [TranscriptSegment]
-    let mode: SarvamMode
+    let engine: Engine
+    let mode: String
     let languageCode: String
 
     var fullText: String {
         segments.map(\.text).joined(separator: " ")
     }
 
-    init(segments: [TranscriptSegment], mode: SarvamMode, languageCode: String) {
+    init(segments: [TranscriptSegment],
+         engine: Engine,
+         mode: String,
+         languageCode: String) {
         self.id = UUID()
         self.date = .now
         self.segments = segments
+        self.engine = engine
         self.mode = mode
         self.languageCode = languageCode
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id, date, segments, engine, mode, languageCode
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        self.id           = try c.decode(UUID.self, forKey: .id)
+        self.date         = try c.decode(Date.self, forKey: .date)
+        self.segments     = try c.decode([TranscriptSegment].self, forKey: .segments)
+        self.mode         = try c.decode(String.self, forKey: .mode)
+        self.languageCode = try c.decode(String.self, forKey: .languageCode)
+        self.engine       = try c.decodeIfPresent(Engine.self, forKey: .engine) ?? .sarvam
     }
 }

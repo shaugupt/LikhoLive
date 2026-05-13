@@ -24,11 +24,16 @@ final class SessionCoordinator: ObservableObject {
 
     // MARK: - Services
     private let audio    = AudioCaptureService()
-    /// `nonisolated` because the reference is set once at init and never mutated; the
-    /// audio-capture delegate calls into the engine from a background thread and the
-    /// engine itself owns its own thread-safety. Without this annotation Swift 6 mode
-    /// rejects the cross-isolation read of a protocol-existential property.
-    nonisolated private let engine: TranscriptionEngine = SessionCoordinator.makeEngine(for: AppSettings.shared.engine)
+    /// The active backend. `nonisolated(unsafe)` because:
+    ///  - Reads happen from the audio capture thread (`engine.send(audio:)`).
+    ///  - Writes happen only on the main actor via `switchEngine(to:)`, and
+    ///    are gated on `state == .idle/.stopped` so no in-flight session sees
+    ///    a torn pointer.
+    ///  - On Apple platforms, an aligned class-pointer write is atomic, so a
+    ///    cross-thread read observes either the old or new engine — both
+    ///    valid post-`switchEngine`.
+    nonisolated(unsafe) private var engine: TranscriptionEngine
+        = SessionCoordinator.makeEngine(for: AppSettings.shared.engine)
     private let silence  = SilenceDetector()
     private let settings = AppSettings.shared
 
@@ -55,6 +60,22 @@ final class SessionCoordinator: ObservableObject {
         case .sarvam:  return SarvamEngine()
         case .whisper: return WhisperEngine()
         }
+    }
+
+    /// Live-switch the active engine. Disallowed during an active session —
+    /// the caller (Settings UI) gates the picker on `state.isActive == false`.
+    /// Persists the new selection in `AppSettings.engine`.
+    func switchEngine(to selection: Engine) {
+        guard !state.isActive else {
+            log.debug("switchEngine ignored: session active")
+            return
+        }
+        guard selection != settings.engine else { return }
+        log.info("Switching engine: \(self.settings.engine.rawValue, privacy: .public) → \(selection.rawValue, privacy: .public)")
+        let new = SessionCoordinator.makeEngine(for: selection)
+        new.delegate = self
+        self.engine = new
+        settings.engine = selection
     }
 
     // MARK: - Start
@@ -132,9 +153,12 @@ final class SessionCoordinator: ObservableObject {
         engine.stop()
 
         if !segments.isEmpty {
-            let session = TranscriptSession(segments: segments,
-                                            mode: settings.mode,
-                                            languageCode: settings.languageCode)
+            let session = TranscriptSession(
+                segments: segments,
+                engine: settings.engine,
+                mode: settings.currentEngineMode,
+                languageCode: settings.currentEngineLanguageCode
+            )
             HistoryStore.shared.save(session: session)
         }
 
