@@ -7,6 +7,14 @@ final class AppSettings: ObservableObject {
 
     private let defaults = UserDefaults.standard
 
+    // MARK: - Engine
+    /// Active transcription backend. Phase-1 default is `.sarvam` to preserve v1 behavior;
+    /// Phase 4 flips this to `.whisper` (with a migration heuristic that keeps existing
+    /// Sarvam users on Sarvam if they already have an API key set).
+    @Published var engine: Engine {
+        didSet { defaults.set(engine.rawValue, forKey: Keys.engine) }
+    }
+
     // MARK: - Sarvam
     @Published var mode: SarvamMode {
         didSet { defaults.set(mode.rawValue, forKey: Keys.mode) }
@@ -48,6 +56,7 @@ final class AppSettings: ObservableObject {
     }
 
     private init() {
+        engine       = Engine(rawValue: defaults.string(forKey: Keys.engine) ?? "") ?? .sarvam
         mode         = SarvamMode(rawValue: defaults.string(forKey: Keys.mode) ?? "") ?? .transcribe
         languageCode = defaults.string(forKey: Keys.languageCode) ?? SarvamLanguage.defaultLanguage.id
         restoreClipboard = defaults.object(forKey: Keys.restoreClipboard) as? Bool ?? true
@@ -58,6 +67,7 @@ final class AppSettings: ObservableObject {
     }
 
     private enum Keys {
+        static let engine           = "engine"
         static let mode             = "sarvam_mode"
         static let languageCode     = "sarvam_language_code"
         static let restoreClipboard = "restore_clipboard"

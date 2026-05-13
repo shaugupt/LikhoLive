@@ -6,7 +6,10 @@ import OSLog
 private let log = Logger(subsystem: "com.shaugupt.LikhoLive", category: "SessionCoordinator")
 
 /// The central coordinator for a live transcription session.
-/// Owns: audio, WebSocket, silence detection, focus monitoring, text injection.
+/// Owns: audio capture, the active transcription engine, silence detection, text injection.
+///
+/// The coordinator is engine-agnostic — it drives only the `TranscriptionEngine` protocol.
+/// All backend-specific concerns (API keys, reconnect, model loading) live inside the engine.
 @MainActor
 final class SessionCoordinator: ObservableObject {
 
@@ -21,7 +24,11 @@ final class SessionCoordinator: ObservableObject {
 
     // MARK: - Services
     private let audio    = AudioCaptureService()
-    private let sarvam   = SarvamStreamingClient()
+    /// `nonisolated` because the reference is set once at init and never mutated; the
+    /// audio-capture delegate calls into the engine from a background thread and the
+    /// engine itself owns its own thread-safety. Without this annotation Swift 6 mode
+    /// rejects the cross-isolation read of a protocol-existential property.
+    nonisolated private let engine: TranscriptionEngine = SessionCoordinator.makeEngine(for: AppSettings.shared.engine)
     private let silence  = SilenceDetector()
     private let settings = AppSettings.shared
 
@@ -29,16 +36,25 @@ final class SessionCoordinator: ObservableObject {
     private var needsSpaceBefore = false
     private var periodicFlushTask: Task<Void, Never>?
 
-    // Latency: timestamp of the last flush or audio chunk send
-    private var lastAudioSentAt: Date? = nil
-
-    // Reconnect
-    private var reconnectAttempts = 0
-
     private init() {
         audio.delegate   = self
-        sarvam.delegate  = self
+        engine.delegate  = self
         silence.delegate = self
+    }
+
+    // MARK: - Engine factory
+
+    /// Constructs the concrete engine for the given selection.
+    /// Phase 1: `.sarvam` resolves to the real engine. `.whisper` falls back to Sarvam
+    /// for now — the Whisper backend lands in Phase 4. Once `WhisperEngine` exists this
+    /// switch flips it on.
+    ///
+    /// `nonisolated` so the `nonisolated let engine` property initializer can call it.
+    nonisolated private static func makeEngine(for selection: Engine) -> TranscriptionEngine {
+        switch selection {
+        case .sarvam:  return SarvamEngine()
+        case .whisper: return SarvamEngine()
+        }
     }
 
     // MARK: - Start
@@ -51,27 +67,33 @@ final class SessionCoordinator: ObservableObject {
         if SecureFieldGuard.shared.isFocusedElementSecure() {
             state = .error("Cannot dictate into a secure field"); return
         }
-        guard let apiKey = KeychainStore.shared.apiKey(), !apiKey.isEmpty else {
-            state = .error("Sarvam API key not set"); return
-        }
 
         sessionTranscript = ""
         pendingText = ""
         segments = []
         needsSpaceBefore = false
         lastLatencyMs = nil
-        reconnectAttempts = 0
 
-        // Play start sound BEFORE engine starts to avoid AudioQueue racing with the tap setup.
+        // Engine-specific validation (e.g. Sarvam API key) happens inside `engine.start`.
+        // Doing this before `playSound` ensures we never play a misleading start chime
+        // when the session can't actually begin.
+        do {
+            try engine.start(mode: settings.mode.rawValue,
+                             languageCode: settings.languageCode)
+        } catch {
+            state = .error(error.localizedDescription)
+            return
+        }
+
+        // Play start sound BEFORE the audio engine starts to avoid AudioQueue racing
+        // with the tap setup.
         playSound(.start)
-
-        connectSarvam(apiKey: apiKey)
 
         do {
             try audio.start()
         } catch {
-            self.state = .error(error.localizedDescription)
-            sarvam.disconnect()
+            state = .error(error.localizedDescription)
+            engine.stop()
             return
         }
 
@@ -84,12 +106,6 @@ final class SessionCoordinator: ObservableObject {
         state = .listening
     }
 
-    private func connectSarvam(apiKey: String) {
-        sarvam.connect(apiKey: apiKey,
-                       mode: settings.mode,
-                       languageCode: settings.languageCode)
-    }
-
     // MARK: - Stop
 
     func stopSession(reason: StopReason = .user) {
@@ -100,7 +116,7 @@ final class SessionCoordinator: ObservableObject {
         periodicFlushTask?.cancel()
         periodicFlushTask = nil
         audio.stop()
-        sarvam.flush()
+        engine.flush()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             self?.finalizeSession(reason: reason)
@@ -112,7 +128,7 @@ final class SessionCoordinator: ObservableObject {
     }
 
     private func finalizeSession(reason: StopReason) {
-        sarvam.disconnect()
+        engine.stop()
 
         if !segments.isEmpty {
             let session = TranscriptSession(segments: segments,
@@ -132,28 +148,6 @@ final class SessionCoordinator: ObservableObject {
         }
     }
 
-    // MARK: - Reconnect (on unexpected WebSocket close during active session)
-
-    private func handleUnexpectedClose() {
-        guard state == .listening else { return }
-        guard let apiKey = KeychainStore.shared.apiKey(), !apiKey.isEmpty else { return }
-
-        reconnectAttempts += 1
-        let attempt = reconnectAttempts
-        log.debug("[Coordinator] Reconnecting attempt \(attempt, privacy: .public) after unexpected close")
-
-        // Brief pause then reconnect — audio capture keeps running the whole time.
-        // We do NOT cap reconnect attempts: Sarvam server-side closes are common
-        // (idle timeout, session limit) and should never hard-stop the user's session.
-        let delay: Double = min(0.3 * Double(attempt), 2.0)  // 0.3s, 0.6s, 0.9s … capped at 2s
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-            guard let self, self.state == .listening else { return }
-            self.sarvam.connect(apiKey: apiKey,
-                                mode: self.settings.mode,
-                                languageCode: self.settings.languageCode)
-        }
-    }
-
     // MARK: - Periodic flush
 
     private func startPeriodicFlush() {
@@ -162,8 +156,7 @@ final class SessionCoordinator: ObservableObject {
             while true {
                 try? await Task.sleep(for: .seconds(6))
                 guard let self, self.state == .listening else { break }
-                self.lastAudioSentAt = Date()
-                self.sarvam.flush()
+                self.engine.flush()
             }
         }
     }
@@ -222,9 +215,7 @@ final class SessionCoordinator: ObservableObject {
 
 extension SessionCoordinator: AudioCaptureDelegate {
     nonisolated func audioCaptureService(_ service: AudioCaptureService, didCapture pcmData: Data) {
-        // Timestamp every send for latency measurement
-        Task { @MainActor in self.lastAudioSentAt = Date() }
-        sarvam.sendAudio(pcmData)
+        engine.send(audio: pcmData)
     }
 
     nonisolated func audioCaptureService(_ service: AudioCaptureService, didFailWithError error: Error) {
@@ -235,42 +226,35 @@ extension SessionCoordinator: AudioCaptureDelegate {
     }
 }
 
-// MARK: - SarvamStreamingDelegate
+// MARK: - TranscriptionEngineDelegate
 
-extension SessionCoordinator: SarvamStreamingDelegate {
-    nonisolated func sarvamClient(_ client: SarvamStreamingClient, didReceiveTranscript text: String) {
+extension SessionCoordinator: TranscriptionEngineDelegate {
+
+    nonisolated func transcriptionEngine(_ engine: TranscriptionEngine,
+                                         didEmit transcript: String,
+                                         sentAt: Date?) {
         Task { @MainActor in
-            let sentAt = self.lastAudioSentAt
-            let segment = TranscriptSegment(text: text)
+            let segment = TranscriptSegment(text: transcript)
             self.segments.append(segment)
-            self.deliverText(text, sentAt: sentAt)
-            // Reset reconnect counter on successful transcript
-            self.reconnectAttempts = 0
+            self.deliverText(transcript, sentAt: sentAt)
         }
     }
 
-    nonisolated func sarvamClient(_ client: SarvamStreamingClient, didReceiveVADEvent event: VADEvent) {
+    nonisolated func transcriptionEngine(_ engine: TranscriptionEngine,
+                                         didEmit vadEvent: VADEvent) {
         Task { @MainActor in
-            self.silence.handleVADEvent(event)
+            self.silence.handleVADEvent(vadEvent)
         }
     }
 
-    nonisolated func sarvamClient(_ client: SarvamStreamingClient, didFailWithError error: Error) {
+    nonisolated func transcriptionEngine(_ engine: TranscriptionEngine,
+                                         didFailWith error: Error) {
         Task { @MainActor in
-            log.debug("[Coordinator] didFailWithError: \(error, privacy: .public) state:\(String(describing: self.state), privacy: .public)")
-            // sarvamClientDidClose fires right after this and handles reconnect.
-            // Never hard-stop here — server-side errors are transient and recoverable.
-        }
-    }
-
-    nonisolated func sarvamClientDidClose(_ client: SarvamStreamingClient,
-                                          code: URLSessionWebSocketTask.CloseCode,
-                                          reason: String?) {
-        Task { @MainActor in
-            log.debug("[Coordinator] WebSocket closed — code:\(code.rawValue, privacy: .public) reason:\((reason ?? "nil"), privacy: .public) state:\(String(describing: self.state), privacy: .public)")
-            if self.state == .listening {
-                self.handleUnexpectedClose()
-            }
+            log.debug("[Coordinator] engine fatal error: \(error.localizedDescription, privacy: .public) state:\(String(describing: self.state), privacy: .public)")
+            // The engine handles its own transient/recoverable errors. If we get here, the
+            // session is over.
+            self.state = .error(error.localizedDescription)
+            self.stopSession(reason: .networkError)
         }
     }
 }

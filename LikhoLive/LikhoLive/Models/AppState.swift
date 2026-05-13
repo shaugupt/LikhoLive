@@ -23,6 +23,23 @@ enum SessionState: Equatable {
     }
 }
 
+/// Active transcription backend. Persisted in `AppSettings.engine`.
+///
+/// Whisper runs the GGML model locally via whisper.cpp; Sarvam streams audio to
+/// `saaras:v3` over WebSocket. Each engine has its own mode and language settings —
+/// see `SarvamMode` / `WhisperMode` and the per-engine language codes.
+enum Engine: String, CaseIterable, Codable {
+    case whisper
+    case sarvam
+
+    var displayName: String {
+        switch self {
+        case .whisper: return "Whisper (local)"
+        case .sarvam:  return "Sarvam (cloud)"
+        }
+    }
+}
+
 /// All five Sarvam saaras:v3 modes, using exact Sarvam terminology.
 enum SarvamMode: String, CaseIterable, Codable {
     case transcribe

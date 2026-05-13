@@ -15,14 +15,16 @@
 		3F993027D442D3E4569D7BA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ECA0CF47FF909F672CDC80 /* AppDelegate.swift */; };
 		4EBCAD8B6D9FA28D3B7AC599 /* TextInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5590DE1A20E46E98A608EA5C /* TextInjector.swift */; };
 		5AD321EBF4BCC54D8919131E /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC76979B87CDA1BC982E64BF /* KeychainStore.swift */; };
+		5BAC2E867FACCF9DEBE9B27E /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5FA1FD177AFD652B71B46E /* TranscriptionEngine.swift */; };
 		718170B73700C65DC24EB7EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F0DA8464DE79544419CD3A /* SettingsViewController.swift */; };
 		7BA79D7BEAECFF5A128737DB /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED2C120D59D645D18AD515B /* PermissionManager.swift */; };
 		7D26741A250B4EE54EA79086 /* SessionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE144DCBB147676C72FB9C21 /* SessionCoordinator.swift */; };
 		9132F9427A1FEBD71ABDD47D /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB2E16CFAD7387B9FBE6858 /* StatusBarController.swift */; };
 		95035942200F0137D16949BE /* SilenceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7290682659FB672C7FDED2D7 /* SilenceDetector.swift */; };
+		96EE35DCBD036EBE63E42C2E /* SarvamStreamingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FBCCBEDC144B2798407D44 /* SarvamStreamingClient.swift */; };
 		ADAE755EA8DC5D1CAFF1722C /* AudioCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */; };
+		BCAAD00EA9FF78619F7E8A02 /* SarvamEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7621936BFD84C7DFC8FE8D9B /* SarvamEngine.swift */; };
 		D6851CF8F42528AC8BF98913 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */; };
-		E8880ADC8256017EDEA67108 /* SarvamStreamingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41535ED2E6F2360C432FAA7D /* SarvamStreamingClient.swift */; };
 		E9221A439BCF9E732B9E1892 /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCACEBC934E4D760EAD0D95 /* HotkeyManager.swift */; };
 		EDC04BAE8ABD5DA5FF6A2E09 /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E18059A4627A93C5D5ED3B /* HistoryStore.swift */; };
 		F746EC47D6EF37DDAB6DB203 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE3FB43FFF6060935FEBD8 /* AppState.swift */; };
@@ -31,8 +33,8 @@
 /* Begin PBXFileReference section */
 		01E18059A4627A93C5D5ED3B /* HistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
 		0BB2E16CFAD7387B9FBE6858 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
+		2C5FA1FD177AFD652B71B46E /* TranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionEngine.swift; sourceTree = "<group>"; };
 		2E539DEBC4C501EBB4502FA0 /* LikhoLive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LikhoLive.entitlements; sourceTree = "<group>"; };
-		41535ED2E6F2360C432FAA7D /* SarvamStreamingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SarvamStreamingClient.swift; sourceTree = "<group>"; };
 		45ECA0CF47FF909F672CDC80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A52F34B9D2C2ED5B6328E37 /* SecureFieldGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldGuard.swift; sourceTree = "<group>"; };
 		51A6EBC4509F9EACA12FB0C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -41,10 +43,12 @@
 		56013CEBE43C4583B4710451 /* PanelWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelWindowController.swift; sourceTree = "<group>"; };
 		5FEE3FB43FFF6060935FEBD8 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		7290682659FB672C7FDED2D7 /* SilenceDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilenceDetector.swift; sourceTree = "<group>"; };
+		7621936BFD84C7DFC8FE8D9B /* SarvamEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SarvamEngine.swift; sourceTree = "<group>"; };
 		7E742BB325641E7D69FD0DBF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8BCACEBC934E4D760EAD0D95 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
 		8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCaptureService.swift; sourceTree = "<group>"; };
+		A7FBCCBEDC144B2798407D44 /* SarvamStreamingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SarvamStreamingClient.swift; sourceTree = "<group>"; };
 		AC76979B87CDA1BC982E64BF /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		BED2C120D59D645D18AD515B /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		DE144DCBB147676C72FB9C21 /* SessionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCoordinator.swift; sourceTree = "<group>"; };
@@ -86,6 +90,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		94E99094A5B561EE37E1C8D4 /* Engines */ = {
+			isa = PBXGroup;
+			children = (
+				2C5FA1FD177AFD652B71B46E /* TranscriptionEngine.swift */,
+				C44BB399C85C48DECB9F332E /* Sarvam */,
+			);
+			path = Engines;
+			sourceTree = "<group>";
+		};
 		95DCDE70B613BEEE737C3B36 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +119,15 @@
 			);
 			sourceTree = "<group>";
 		};
+		C44BB399C85C48DECB9F332E /* Sarvam */ = {
+			isa = PBXGroup;
+			children = (
+				7621936BFD84C7DFC8FE8D9B /* SarvamEngine.swift */,
+				A7FBCCBEDC144B2798407D44 /* SarvamStreamingClient.swift */,
+			);
+			path = Sarvam;
+			sourceTree = "<group>";
+		};
 		D00DA4FAA0A9010959432DD6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,9 +142,9 @@
 				9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */,
 				01E18059A4627A93C5D5ED3B /* HistoryStore.swift */,
 				AC76979B87CDA1BC982E64BF /* KeychainStore.swift */,
-				41535ED2E6F2360C432FAA7D /* SarvamStreamingClient.swift */,
 				DE144DCBB147676C72FB9C21 /* SessionCoordinator.swift */,
 				7290682659FB672C7FDED2D7 /* SilenceDetector.swift */,
+				94E99094A5B561EE37E1C8D4 /* Engines */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -217,13 +239,15 @@
 				04D53E2C42914CFDCE94E111 /* LaunchAtLoginHelper.swift in Sources */,
 				06E1257DAB3E5CA2EF9DCA59 /* PanelWindowController.swift in Sources */,
 				7BA79D7BEAECFF5A128737DB /* PermissionManager.swift in Sources */,
-				E8880ADC8256017EDEA67108 /* SarvamStreamingClient.swift in Sources */,
+				BCAAD00EA9FF78619F7E8A02 /* SarvamEngine.swift in Sources */,
+				96EE35DCBD036EBE63E42C2E /* SarvamStreamingClient.swift in Sources */,
 				325E78C7558CE7BBC24E4CFA /* SecureFieldGuard.swift in Sources */,
 				7D26741A250B4EE54EA79086 /* SessionCoordinator.swift in Sources */,
 				718170B73700C65DC24EB7EB /* SettingsViewController.swift in Sources */,
 				95035942200F0137D16949BE /* SilenceDetector.swift in Sources */,
 				9132F9427A1FEBD71ABDD47D /* StatusBarController.swift in Sources */,
 				4EBCAD8B6D9FA28D3B7AC599 /* TextInjector.swift in Sources */,
+				5BAC2E867FACCF9DEBE9B27E /* TranscriptionEngine.swift in Sources */,
 				2F30CFCB2E0B4C3457AED1AD /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

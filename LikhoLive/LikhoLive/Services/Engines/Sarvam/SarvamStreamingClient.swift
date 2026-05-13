@@ -10,11 +10,6 @@ protocol SarvamStreamingDelegate: AnyObject {
     func sarvamClientDidClose(_ client: SarvamStreamingClient, code: URLSessionWebSocketTask.CloseCode, reason: String?)
 }
 
-enum VADEvent {
-    case speechStart
-    case speechEnd
-}
-
 /// Streams audio to the Sarvam saaras:v3 WebSocket STT endpoint.
 final class SarvamStreamingClient: NSObject {
 
