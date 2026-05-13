@@ -17,6 +17,7 @@
 		5AD321EBF4BCC54D8919131E /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC76979B87CDA1BC982E64BF /* KeychainStore.swift */; };
 		5BAC2E867FACCF9DEBE9B27E /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5FA1FD177AFD652B71B46E /* TranscriptionEngine.swift */; };
 		718170B73700C65DC24EB7EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F0DA8464DE79544419CD3A /* SettingsViewController.swift */; };
+		75C7B1535C5C8D33BB49AC66 /* whisper in Frameworks */ = {isa = PBXBuildFile; productRef = FAD42A9FE43E0A70D8AF7E48 /* whisper */; };
 		7BA79D7BEAECFF5A128737DB /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED2C120D59D645D18AD515B /* PermissionManager.swift */; };
 		7D26741A250B4EE54EA79086 /* SessionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE144DCBB147676C72FB9C21 /* SessionCoordinator.swift */; };
 		9132F9427A1FEBD71ABDD47D /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB2E16CFAD7387B9FBE6858 /* StatusBarController.swift */; };
@@ -28,6 +29,7 @@
 		E9221A439BCF9E732B9E1892 /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCACEBC934E4D760EAD0D95 /* HotkeyManager.swift */; };
 		EDC04BAE8ABD5DA5FF6A2E09 /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E18059A4627A93C5D5ED3B /* HistoryStore.swift */; };
 		F746EC47D6EF37DDAB6DB203 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE3FB43FFF6060935FEBD8 /* AppState.swift */; };
+		FD7388557C01B021A334257D /* WhisperWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E21CF1359C8FAE3F0C6063C /* WhisperWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,10 +43,12 @@
 		54F0DA8464DE79544419CD3A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5590DE1A20E46E98A608EA5C /* TextInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInjector.swift; sourceTree = "<group>"; };
 		56013CEBE43C4583B4710451 /* PanelWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelWindowController.swift; sourceTree = "<group>"; };
+		5E21CF1359C8FAE3F0C6063C /* WhisperWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperWrapper.swift; sourceTree = "<group>"; };
 		5FEE3FB43FFF6060935FEBD8 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		7290682659FB672C7FDED2D7 /* SilenceDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilenceDetector.swift; sourceTree = "<group>"; };
 		7621936BFD84C7DFC8FE8D9B /* SarvamEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SarvamEngine.swift; sourceTree = "<group>"; };
 		7E742BB325641E7D69FD0DBF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		889AE8D10CF779E2EC1A4F6C /* WhisperPackage */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WhisperPackage; path = WhisperPackage; sourceTree = SOURCE_ROOT; };
 		8BCACEBC934E4D760EAD0D95 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
 		8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCaptureService.swift; sourceTree = "<group>"; };
@@ -55,6 +59,17 @@
 		F4FDDC8BF02F1C6CF52E16AD /* LaunchAtLoginHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginHelper.swift; sourceTree = "<group>"; };
 		F84C8D0BA1165B0B222BF34D /* LikhoLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LikhoLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		44FD568D87150DC37F2D93AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75C7B1535C5C8D33BB49AC66 /* whisper in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		1798DA7E5852E1AF61A34022 /* LikhoLive */ = {
@@ -95,6 +110,7 @@
 			children = (
 				2C5FA1FD177AFD652B71B46E /* TranscriptionEngine.swift */,
 				C44BB399C85C48DECB9F332E /* Sarvam */,
+				A418CA859E1275EF59D4E47D /* Whisper */,
 			);
 			path = Engines;
 			sourceTree = "<group>";
@@ -111,10 +127,19 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		A418CA859E1275EF59D4E47D /* Whisper */ = {
+			isa = PBXGroup;
+			children = (
+				5E21CF1359C8FAE3F0C6063C /* WhisperWrapper.swift */,
+			);
+			path = Whisper;
+			sourceTree = "<group>";
+		};
 		BFAFDB11FF43F87A1ECD1087 = {
 			isa = PBXGroup;
 			children = (
 				1798DA7E5852E1AF61A34022 /* LikhoLive */,
+				E08186B1CA2F3987D89672FF /* Packages */,
 				70DC99A510ABEC88EF182B21 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,6 +159,14 @@
 				2E539DEBC4C501EBB4502FA0 /* LikhoLive.entitlements */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		E08186B1CA2F3987D89672FF /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				889AE8D10CF779E2EC1A4F6C /* WhisperPackage */,
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 		E185803E25AC77F622DDF355 /* Services */ = {
@@ -167,6 +200,7 @@
 			buildPhases = (
 				41434B5C65173BBA6FD8F239 /* Sources */,
 				05C2147181E1B2FD473DDF93 /* Resources */,
+				44FD568D87150DC37F2D93AC /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -174,6 +208,7 @@
 			);
 			name = LikhoLive;
 			packageProductDependencies = (
+				FAD42A9FE43E0A70D8AF7E48 /* whisper */,
 			);
 			productName = LikhoLive;
 			productReference = F84C8D0BA1165B0B222BF34D /* LikhoLive.app */;
@@ -203,6 +238,9 @@
 			);
 			mainGroup = BFAFDB11FF43F87A1ECD1087;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				851657EBCE931996CB6F2895 /* XCLocalSwiftPackageReference "WhisperPackage" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 70DC99A510ABEC88EF182B21 /* Products */;
 			projectDirPath = "";
@@ -248,6 +286,7 @@
 				9132F9427A1FEBD71ABDD47D /* StatusBarController.swift in Sources */,
 				4EBCAD8B6D9FA28D3B7AC599 /* TextInjector.swift in Sources */,
 				5BAC2E867FACCF9DEBE9B27E /* TranscriptionEngine.swift in Sources */,
+				FD7388557C01B021A334257D /* WhisperWrapper.swift in Sources */,
 				2F30CFCB2E0B4C3457AED1AD /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,7 +343,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "";
@@ -324,7 +363,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = LikhoLive/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shaugupt.LikhoLive;
 				SDKROOT = macosx;
 			};
@@ -338,7 +377,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = LikhoLive/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shaugupt.LikhoLive;
 				SDKROOT = macosx;
 			};
@@ -399,7 +438,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -434,6 +473,20 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		851657EBCE931996CB6F2895 /* XCLocalSwiftPackageReference "WhisperPackage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = WhisperPackage;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FAD42A9FE43E0A70D8AF7E48 /* whisper */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = whisper;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4F72DEF3E0F9FCE454E0980B /* Project object */;
 }

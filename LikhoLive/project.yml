@@ -2,16 +2,22 @@ name: LikhoLive
 options:
   bundleIdPrefix: com.shaugupt
   deploymentTarget:
-    macOS: "13.0"
+    macOS: "13.3"
   defaultConfig: Debug
   xcodeVersion: "16.0"
   generateEmptyDirectories: true
+
+# Local SPM package wrapping the prebuilt whisper.cpp XCFramework
+# (binaryTarget with checksum verification — see WhisperPackage/Package.swift).
+packages:
+  WhisperPackage:
+    path: WhisperPackage
 
 settings:
   base:
     PRODUCT_NAME: LikhoLive
     SWIFT_VERSION: "5.9"
-    MACOSX_DEPLOYMENT_TARGET: "13.0"
+    MACOSX_DEPLOYMENT_TARGET: "13.3"
     CODE_SIGN_STYLE: Automatic
     DEVELOPMENT_TEAM: ""
     CODE_SIGN_IDENTITY: "-"
@@ -29,7 +35,7 @@ targets:
   LikhoLive:
     type: application
     platform: macOS
-    deploymentTarget: "13.0"
+    deploymentTarget: "13.3"
     sources:
       - path: LikhoLive
         excludes:
@@ -52,7 +58,7 @@ targets:
         NSMicrophoneUsageDescription: "LikhoLive needs microphone access to transcribe your speech in real time."
         NSPrincipalClass: NSApplication
         NSHumanReadableCopyright: "© 2026 shaugupt. All rights reserved."
-        LSMinimumSystemVersion: "13.0"
+        LSMinimumSystemVersion: "13.3"
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: false
           NSExceptionDomains:
@@ -69,4 +75,6 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
         COMBINE_HIDPI_IMAGES: YES
-    dependencies: []
+    dependencies:
+      - package: WhisperPackage
+        product: whisper
