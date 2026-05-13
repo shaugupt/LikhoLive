@@ -45,15 +45,15 @@ final class SessionCoordinator: ObservableObject {
     // MARK: - Engine factory
 
     /// Constructs the concrete engine for the given selection.
-    /// Phase 1: `.sarvam` resolves to the real engine. `.whisper` falls back to Sarvam
-    /// for now — the Whisper backend lands in Phase 4. Once `WhisperEngine` exists this
-    /// switch flips it on.
     ///
     /// `nonisolated` so the `nonisolated let engine` property initializer can call it.
+    /// Engine swapping at runtime (e.g. user toggles between Whisper/Sarvam after
+    /// launch) is a Phase 5 concern; today the choice is fixed at app start and
+    /// changes require a relaunch.
     nonisolated private static func makeEngine(for selection: Engine) -> TranscriptionEngine {
         switch selection {
         case .sarvam:  return SarvamEngine()
-        case .whisper: return SarvamEngine()
+        case .whisper: return WhisperEngine()
         }
     }
 
@@ -74,12 +74,13 @@ final class SessionCoordinator: ObservableObject {
         needsSpaceBefore = false
         lastLatencyMs = nil
 
-        // Engine-specific validation (e.g. Sarvam API key) happens inside `engine.start`.
-        // Doing this before `playSound` ensures we never play a misleading start chime
-        // when the session can't actually begin.
+        // Engine-specific validation (e.g. Sarvam API key, Whisper model loaded)
+        // happens inside `engine.start`. Doing this before `playSound` ensures
+        // we never play a misleading start chime when the session can't actually
+        // begin. Mode/language strings are routed per-engine via AppSettings.
         do {
-            try engine.start(mode: settings.mode.rawValue,
-                             languageCode: settings.languageCode)
+            try engine.start(mode: settings.currentEngineMode,
+                             languageCode: settings.currentEngineLanguageCode)
         } catch {
             state = .error(error.localizedDescription)
             return

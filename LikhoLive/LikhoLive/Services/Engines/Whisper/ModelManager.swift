@@ -16,6 +16,26 @@ final class ModelManager: NSObject, ObservableObject {
 
     static let shared = ModelManager()
 
+    /// Static, thread-safe accessor for the models directory. Used by
+    /// non-main callers (e.g. `WhisperEngine`'s audio queue) that need to
+    /// resolve a model path without touching the main-actor singleton.
+    nonisolated static let modelsDirectoryStatic: URL = {
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory,
+                                                  in: .userDomainMask).first!
+        return appSupport
+            .appendingPathComponent("LikhoLive", isDirectory: true)
+            .appendingPathComponent("models", isDirectory: true)
+    }()
+
+    /// Filesystem-authoritative lookup, callable from any thread. Returns the
+    /// absolute URL of the installed model, or `nil` if the file is missing
+    /// or the id isn't in the catalog. Does not consult the in-memory cache.
+    nonisolated static func installedURL(for id: String) -> URL? {
+        guard let model = WhisperModelCatalog.model(id: id) else { return nil }
+        let url = modelsDirectoryStatic.appendingPathComponent(model.filename)
+        return FileManager.default.fileExists(atPath: url.path) ? url : nil
+    }
+
     // MARK: - Public state (observable)
 
     /// Phases of the active download (if any).
@@ -71,12 +91,7 @@ final class ModelManager: NSObject, ObservableObject {
     private var inFlight: InFlight?
 
     private override init() {
-        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory,
-                                                  in: .userDomainMask).first!
-        self.modelsDirectory = appSupport
-            .appendingPathComponent("LikhoLive", isDirectory: true)
-            .appendingPathComponent("models", isDirectory: true)
-
+        self.modelsDirectory = Self.modelsDirectoryStatic
         super.init()
 
         try? FileManager.default.createDirectory(at: modelsDirectory,

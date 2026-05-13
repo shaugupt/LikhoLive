@@ -40,6 +40,27 @@ enum Engine: String, CaseIterable, Codable {
     }
 }
 
+/// Whisper inference modes. Maps directly onto whisper.cpp's `translate` flag —
+/// `transcribe` keeps the source language, `translate` cross-decodes to English.
+/// Whisper.cpp doesn't have Sarvam-style verbatim/translit/codemix variants.
+enum WhisperMode: String, CaseIterable, Codable {
+    case transcribe
+    case translate
+
+    var displayName: String { rawValue }
+
+    var description: String {
+        switch self {
+        case .transcribe: return "Transcribe in spoken language"
+        case .translate:  return "Translate any language → English"
+        }
+    }
+}
+
+/// Magic value for "let whisper.cpp pick the language at decode time".
+/// Stored in `AppSettings.whisperLanguageCode` as the default.
+let whisperLanguageAuto = "auto"
+
 /// All five Sarvam saaras:v3 modes, using exact Sarvam terminology.
 enum SarvamMode: String, CaseIterable, Codable {
     case transcribe

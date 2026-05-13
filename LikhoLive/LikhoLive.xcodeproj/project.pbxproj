@@ -13,7 +13,9 @@
 		2F30CFCB2E0B4C3457AED1AD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E742BB325641E7D69FD0DBF /* main.swift */; };
 		325E78C7558CE7BBC24E4CFA /* SecureFieldGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A52F34B9D2C2ED5B6328E37 /* SecureFieldGuard.swift */; };
 		3F993027D442D3E4569D7BA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ECA0CF47FF909F672CDC80 /* AppDelegate.swift */; };
+		437721770EB305FEA9C10D16 /* UtteranceTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADAA6434B9C30FB15AFEA40 /* UtteranceTracker.swift */; };
 		4EBCAD8B6D9FA28D3B7AC599 /* TextInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5590DE1A20E46E98A608EA5C /* TextInjector.swift */; };
+		53B6828FDA316C070BD5A817 /* EnergyVAD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFE471BCCD06B4D24B9A395 /* EnergyVAD.swift */; };
 		5AD321EBF4BCC54D8919131E /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC76979B87CDA1BC982E64BF /* KeychainStore.swift */; };
 		5BAC2E867FACCF9DEBE9B27E /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5FA1FD177AFD652B71B46E /* TranscriptionEngine.swift */; };
 		718170B73700C65DC24EB7EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F0DA8464DE79544419CD3A /* SettingsViewController.swift */; };
@@ -25,6 +27,7 @@
 		9175D9DF8AE02606E99D18D5 /* ModelManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5501A94ECDE0184E08E054C /* ModelManagerWindowController.swift */; };
 		95035942200F0137D16949BE /* SilenceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7290682659FB672C7FDED2D7 /* SilenceDetector.swift */; };
 		96EE35DCBD036EBE63E42C2E /* SarvamStreamingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FBCCBEDC144B2798407D44 /* SarvamStreamingClient.swift */; };
+		98F5B0349F1AD1255BCFA7F5 /* WhisperEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F574F9C37204C8A87F3E4F /* WhisperEngine.swift */; };
 		A3F7EB4DF735FB47C7011DDD /* WhisperModelCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5491351280D56C7607D303DA /* WhisperModelCatalog.swift */; };
 		ADAE755EA8DC5D1CAFF1722C /* AudioCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */; };
 		BCAAD00EA9FF78619F7E8A02 /* SarvamEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7621936BFD84C7DFC8FE8D9B /* SarvamEngine.swift */; };
@@ -40,8 +43,10 @@
 		0BB2E16CFAD7387B9FBE6858 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
 		2C5FA1FD177AFD652B71B46E /* TranscriptionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionEngine.swift; sourceTree = "<group>"; };
 		2E539DEBC4C501EBB4502FA0 /* LikhoLive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LikhoLive.entitlements; sourceTree = "<group>"; };
+		3ADAA6434B9C30FB15AFEA40 /* UtteranceTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtteranceTracker.swift; sourceTree = "<group>"; };
 		45ECA0CF47FF909F672CDC80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A52F34B9D2C2ED5B6328E37 /* SecureFieldGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldGuard.swift; sourceTree = "<group>"; };
+		4BFE471BCCD06B4D24B9A395 /* EnergyVAD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyVAD.swift; sourceTree = "<group>"; };
 		51A6EBC4509F9EACA12FB0C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5491351280D56C7607D303DA /* WhisperModelCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperModelCatalog.swift; sourceTree = "<group>"; };
 		54F0DA8464DE79544419CD3A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +60,7 @@
 		889AE8D10CF779E2EC1A4F6C /* WhisperPackage */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WhisperPackage; path = WhisperPackage; sourceTree = SOURCE_ROOT; };
 		8BCACEBC934E4D760EAD0D95 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
 		8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		91F574F9C37204C8A87F3E4F /* WhisperEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperEngine.swift; sourceTree = "<group>"; };
 		9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCaptureService.swift; sourceTree = "<group>"; };
 		A5501A94ECDE0184E08E054C /* ModelManagerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagerWindowController.swift; sourceTree = "<group>"; };
 		A7FBCCBEDC144B2798407D44 /* SarvamStreamingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SarvamStreamingClient.swift; sourceTree = "<group>"; };
@@ -137,7 +143,10 @@
 		A418CA859E1275EF59D4E47D /* Whisper */ = {
 			isa = PBXGroup;
 			children = (
+				4BFE471BCCD06B4D24B9A395 /* EnergyVAD.swift */,
 				E5ACCD4F822798A9ADFFA566 /* ModelManager.swift */,
+				3ADAA6434B9C30FB15AFEA40 /* UtteranceTracker.swift */,
+				91F574F9C37204C8A87F3E4F /* WhisperEngine.swift */,
 				5E21CF1359C8FAE3F0C6063C /* WhisperWrapper.swift */,
 			);
 			path = Whisper;
@@ -280,6 +289,7 @@
 				D6851CF8F42528AC8BF98913 /* AppSettings.swift in Sources */,
 				F746EC47D6EF37DDAB6DB203 /* AppState.swift in Sources */,
 				ADAE755EA8DC5D1CAFF1722C /* AudioCaptureService.swift in Sources */,
+				53B6828FDA316C070BD5A817 /* EnergyVAD.swift in Sources */,
 				EDC04BAE8ABD5DA5FF6A2E09 /* HistoryStore.swift in Sources */,
 				E9221A439BCF9E732B9E1892 /* HotkeyManager.swift in Sources */,
 				5AD321EBF4BCC54D8919131E /* KeychainStore.swift in Sources */,
@@ -297,6 +307,8 @@
 				9132F9427A1FEBD71ABDD47D /* StatusBarController.swift in Sources */,
 				4EBCAD8B6D9FA28D3B7AC599 /* TextInjector.swift in Sources */,
 				5BAC2E867FACCF9DEBE9B27E /* TranscriptionEngine.swift in Sources */,
+				437721770EB305FEA9C10D16 /* UtteranceTracker.swift in Sources */,
+				98F5B0349F1AD1255BCFA7F5 /* WhisperEngine.swift in Sources */,
 				A3F7EB4DF735FB47C7011DDD /* WhisperModelCatalog.swift in Sources */,
 				FD7388557C01B021A334257D /* WhisperWrapper.swift in Sources */,
 				2F30CFCB2E0B4C3457AED1AD /* main.swift in Sources */,

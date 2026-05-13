@@ -8,9 +8,9 @@ final class AppSettings: ObservableObject {
     private let defaults = UserDefaults.standard
 
     // MARK: - Engine
-    /// Active transcription backend. Phase-1 default is `.sarvam` to preserve v1 behavior;
-    /// Phase 4 flips this to `.whisper` (with a migration heuristic that keeps existing
-    /// Sarvam users on Sarvam if they already have an API key set).
+    /// Active transcription backend. Default is `.whisper` (local, offline-first);
+    /// existing users with a Sarvam API key already saved at first launch are
+    /// migrated to `.sarvam` so v1 behavior is preserved (see init).
     @Published var engine: Engine {
         didSet { defaults.set(engine.rawValue, forKey: Keys.engine) }
     }
@@ -29,6 +29,33 @@ final class AppSettings: ObservableObject {
     /// we fall back to the catalog default at load time.
     @Published var whisperModelID: String {
         didSet { defaults.set(whisperModelID, forKey: Keys.whisperModelID) }
+    }
+    /// Whisper inference mode (transcribe / translate-to-English).
+    @Published var whisperMode: WhisperMode {
+        didSet { defaults.set(whisperMode.rawValue, forKey: Keys.whisperMode) }
+    }
+    /// ISO 639-1 / 639-3 language code, or `whisperLanguageAuto` for auto-detect.
+    @Published var whisperLanguageCode: String {
+        didSet { defaults.set(whisperLanguageCode, forKey: Keys.whisperLanguageCode) }
+    }
+
+    // MARK: - Per-engine helpers
+
+    /// Mode string passed to `engine.start(mode:languageCode:)` — opaque to the
+    /// coordinator, validated by each concrete engine.
+    var currentEngineMode: String {
+        switch engine {
+        case .sarvam:  return mode.rawValue
+        case .whisper: return whisperMode.rawValue
+        }
+    }
+
+    /// Language code passed to `engine.start(mode:languageCode:)`.
+    var currentEngineLanguageCode: String {
+        switch engine {
+        case .sarvam:  return languageCode
+        case .whisper: return whisperLanguageCode
+        }
     }
 
     // MARK: - Behaviour
@@ -64,7 +91,19 @@ final class AppSettings: ObservableObject {
     }
 
     private init() {
-        engine       = Engine(rawValue: defaults.string(forKey: Keys.engine) ?? "") ?? .sarvam
+        // Engine: load saved choice if any. On first launch (no saved value),
+        // migrate based on whether a Sarvam API key already exists in the
+        // keychain — existing v1 users keep their Sarvam-cloud setup; brand-new
+        // users default to local Whisper.
+        if let savedEngine = defaults.string(forKey: Keys.engine),
+           let parsed = Engine(rawValue: savedEngine) {
+            engine = parsed
+        } else if KeychainStore.shared.apiKey() != nil {
+            engine = .sarvam   // existing Sarvam user — preserve v1 behavior
+        } else {
+            engine = .whisper  // new install — local, offline default
+        }
+
         mode         = SarvamMode(rawValue: defaults.string(forKey: Keys.mode) ?? "") ?? .transcribe
         languageCode = defaults.string(forKey: Keys.languageCode) ?? SarvamLanguage.defaultLanguage.id
 
@@ -76,6 +115,9 @@ final class AppSettings: ObservableObject {
             ? savedWhisperModelID
             : WhisperModelCatalog.defaultModelID
 
+        whisperMode = WhisperMode(rawValue: defaults.string(forKey: Keys.whisperMode) ?? "") ?? .transcribe
+        whisperLanguageCode = defaults.string(forKey: Keys.whisperLanguageCode) ?? whisperLanguageAuto
+
         restoreClipboard = defaults.object(forKey: Keys.restoreClipboard) as? Bool ?? true
         launchAtLogin    = defaults.object(forKey: Keys.launchAtLogin)    as? Bool ?? true
         hotkeyEnabled    = defaults.object(forKey: Keys.hotkeyEnabled)    as? Bool ?? true
@@ -84,14 +126,16 @@ final class AppSettings: ObservableObject {
     }
 
     private enum Keys {
-        static let engine           = "engine"
-        static let mode             = "sarvam_mode"
-        static let languageCode     = "sarvam_language_code"
-        static let whisperModelID   = "whisper_model_id"
-        static let restoreClipboard = "restore_clipboard"
-        static let launchAtLogin    = "launch_at_login"
-        static let hotkeyEnabled    = "hotkey_enabled"
-        static let autoStopEnabled  = "auto_stop_enabled"
-        static let autoStopDelay    = "auto_stop_delay"
+        static let engine              = "engine"
+        static let mode                = "sarvam_mode"
+        static let languageCode        = "sarvam_language_code"
+        static let whisperModelID      = "whisper_model_id"
+        static let whisperMode         = "whisper_mode"
+        static let whisperLanguageCode = "whisper_language_code"
+        static let restoreClipboard    = "restore_clipboard"
+        static let launchAtLogin       = "launch_at_login"
+        static let hotkeyEnabled       = "hotkey_enabled"
+        static let autoStopEnabled     = "auto_stop_enabled"
+        static let autoStopDelay       = "auto_stop_delay"
     }
 }
