@@ -23,6 +23,14 @@ final class AppSettings: ObservableObject {
         didSet { defaults.set(languageCode, forKey: Keys.languageCode) }
     }
 
+    // MARK: - Whisper
+    /// Selected GGML model id from `WhisperModelCatalog`. Always points at a
+    /// catalog entry — if a saved id was renamed/removed in a later release,
+    /// we fall back to the catalog default at load time.
+    @Published var whisperModelID: String {
+        didSet { defaults.set(whisperModelID, forKey: Keys.whisperModelID) }
+    }
+
     // MARK: - Behaviour
     @Published var restoreClipboard: Bool {
         didSet { defaults.set(restoreClipboard, forKey: Keys.restoreClipboard) }
@@ -59,6 +67,15 @@ final class AppSettings: ObservableObject {
         engine       = Engine(rawValue: defaults.string(forKey: Keys.engine) ?? "") ?? .sarvam
         mode         = SarvamMode(rawValue: defaults.string(forKey: Keys.mode) ?? "") ?? .transcribe
         languageCode = defaults.string(forKey: Keys.languageCode) ?? SarvamLanguage.defaultLanguage.id
+
+        // Whisper model id: validate against the current catalog so a stale
+        // saved value (e.g. an id removed in a future release) doesn't leave
+        // the user pointed at nothing. Fall back to the catalog default.
+        let savedWhisperModelID = defaults.string(forKey: Keys.whisperModelID) ?? ""
+        whisperModelID = WhisperModelCatalog.model(id: savedWhisperModelID) != nil
+            ? savedWhisperModelID
+            : WhisperModelCatalog.defaultModelID
+
         restoreClipboard = defaults.object(forKey: Keys.restoreClipboard) as? Bool ?? true
         launchAtLogin    = defaults.object(forKey: Keys.launchAtLogin)    as? Bool ?? true
         hotkeyEnabled    = defaults.object(forKey: Keys.hotkeyEnabled)    as? Bool ?? true
@@ -70,6 +87,7 @@ final class AppSettings: ObservableObject {
         static let engine           = "engine"
         static let mode             = "sarvam_mode"
         static let languageCode     = "sarvam_language_code"
+        static let whisperModelID   = "whisper_model_id"
         static let restoreClipboard = "restore_clipboard"
         static let launchAtLogin    = "launch_at_login"
         static let hotkeyEnabled    = "hotkey_enabled"

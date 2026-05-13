@@ -65,6 +65,15 @@ targets:
             api.sarvam.ai:
               NSExceptionAllowsInsecureHTTPLoads: false
               NSIncludesSubdomains: true
+            # Whisper GGML model downloads — HF serves the manifest; LFS files
+            # 302-redirect to the xethub.hf.co CDN. Both are HTTPS (TLS 1.2+),
+            # so we keep ATS strict but explicitly allow these origins.
+            huggingface.co:
+              NSExceptionAllowsInsecureHTTPLoads: false
+              NSIncludesSubdomains: true
+            xethub.hf.co:
+              NSExceptionAllowsInsecureHTTPLoads: false
+              NSIncludesSubdomains: true
     entitlements:
       path: LikhoLive/Resources/LikhoLive.entitlements
     settings:

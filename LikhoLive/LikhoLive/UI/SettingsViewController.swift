@@ -36,13 +36,16 @@ final class SettingsViewController: NSViewController {
     private let apiKeyField     = NSSecureTextField()
     private let apiKeySaveBtn   = NSButton()
 
+    private let whisperModelLabel = NSTextField(labelWithString: "")
+    private let manageModelsBtn   = NSButton()
+
     private let historyTable    = NSTableView()
 
     // MARK: - Lifecycle
 
     override func loadView() {
         let bg = NSColor(white: 0.94, alpha: 1.0) // subtle light grey
-        let v = NSView(frame: NSRect(x: 0, y: 0, width: 380, height: 560))
+        let v = NSView(frame: NSRect(x: 0, y: 0, width: 380, height: 600))
         v.wantsLayer = true
         v.layer?.backgroundColor = bg.cgColor
         view = v
@@ -216,6 +219,23 @@ final class SettingsViewController: NSViewController {
         root.addArrangedSubview(labeledField("API Key", apiKeyField, apiKeySaveBtn))
         root.addArrangedSubview(divider())
 
+        // ── Whisper Models ────────────────────────────────────────
+        whisperModelLabel.font = .systemFont(ofSize: 11)
+        whisperModelLabel.textColor = .labelColor
+        whisperModelLabel.lineBreakMode = .byTruncatingTail
+        whisperModelLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        manageModelsBtn.title = "Manage…"
+        manageModelsBtn.bezelStyle = .rounded
+        manageModelsBtn.controlSize = .small
+        manageModelsBtn.font = .systemFont(ofSize: 11)
+        manageModelsBtn.target = self
+        manageModelsBtn.action = #selector(openModelManager)
+        manageModelsBtn.setContentHuggingPriority(.required, for: .horizontal)
+
+        root.addArrangedSubview(hstack([whisperModelLabel, manageModelsBtn], spacing: 6))
+        root.addArrangedSubview(divider())
+
         // ── History ───────────────────────────────────────────────
         let col = NSTableColumn(identifier: .init("text"))
         col.title = "Transcript"
@@ -349,6 +369,18 @@ final class SettingsViewController: NSViewController {
                 }
             }
             .store(in: &cancellables)
+
+        // Refresh the Whisper model label whenever the user changes selection
+        // or the install set changes (download/delete completed).
+        settings.$whisperModelID
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.updateWhisperModelLabel() }
+            .store(in: &cancellables)
+
+        ModelManager.shared.$installedIDs
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.updateWhisperModelLabel() }
+            .store(in: &cancellables)
     }
 
     // MARK: - Populate
@@ -372,7 +404,17 @@ final class SettingsViewController: NSViewController {
         if let key = KeychainStore.shared.apiKey() {
             apiKeyField.placeholderString = "Saved: \(String(key.prefix(8)))…"
         }
+        updateWhisperModelLabel()
         updatePermissionRows()
+    }
+
+    private func updateWhisperModelLabel() {
+        let id = settings.whisperModelID
+        let name = WhisperModelCatalog.model(id: id)?.displayName ?? id
+        let installed = ModelManager.shared.isInstalled(id)
+        let suffix = installed ? "" : " (not installed)"
+        whisperModelLabel.stringValue = "Whisper: \(name)\(suffix)"
+        whisperModelLabel.textColor   = installed ? .labelColor : .systemOrange
     }
 
     private func updateForState(_ state: SessionState) {
@@ -451,6 +493,10 @@ final class SettingsViewController: NSViewController {
         KeychainStore.shared.save(apiKey: key)
         apiKeyField.stringValue = ""
         apiKeyField.placeholderString = "Saved: \(String(key.prefix(8)))…"
+    }
+
+    @objc private func openModelManager() {
+        ModelManagerWindowController.shared.showAndFocus()
     }
     @objc private func copyHistoryItem() {
         let row = historyTable.clickedRow

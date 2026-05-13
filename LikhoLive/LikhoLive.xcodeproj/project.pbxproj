@@ -17,12 +17,15 @@
 		5AD321EBF4BCC54D8919131E /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC76979B87CDA1BC982E64BF /* KeychainStore.swift */; };
 		5BAC2E867FACCF9DEBE9B27E /* TranscriptionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5FA1FD177AFD652B71B46E /* TranscriptionEngine.swift */; };
 		718170B73700C65DC24EB7EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F0DA8464DE79544419CD3A /* SettingsViewController.swift */; };
+		738D5A4CD11684A9725F97F9 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ACCD4F822798A9ADFFA566 /* ModelManager.swift */; };
 		75C7B1535C5C8D33BB49AC66 /* whisper in Frameworks */ = {isa = PBXBuildFile; productRef = FAD42A9FE43E0A70D8AF7E48 /* whisper */; };
 		7BA79D7BEAECFF5A128737DB /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED2C120D59D645D18AD515B /* PermissionManager.swift */; };
 		7D26741A250B4EE54EA79086 /* SessionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE144DCBB147676C72FB9C21 /* SessionCoordinator.swift */; };
 		9132F9427A1FEBD71ABDD47D /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB2E16CFAD7387B9FBE6858 /* StatusBarController.swift */; };
+		9175D9DF8AE02606E99D18D5 /* ModelManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5501A94ECDE0184E08E054C /* ModelManagerWindowController.swift */; };
 		95035942200F0137D16949BE /* SilenceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7290682659FB672C7FDED2D7 /* SilenceDetector.swift */; };
 		96EE35DCBD036EBE63E42C2E /* SarvamStreamingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FBCCBEDC144B2798407D44 /* SarvamStreamingClient.swift */; };
+		A3F7EB4DF735FB47C7011DDD /* WhisperModelCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5491351280D56C7607D303DA /* WhisperModelCatalog.swift */; };
 		ADAE755EA8DC5D1CAFF1722C /* AudioCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */; };
 		BCAAD00EA9FF78619F7E8A02 /* SarvamEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7621936BFD84C7DFC8FE8D9B /* SarvamEngine.swift */; };
 		D6851CF8F42528AC8BF98913 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */; };
@@ -40,6 +43,7 @@
 		45ECA0CF47FF909F672CDC80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A52F34B9D2C2ED5B6328E37 /* SecureFieldGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldGuard.swift; sourceTree = "<group>"; };
 		51A6EBC4509F9EACA12FB0C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5491351280D56C7607D303DA /* WhisperModelCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperModelCatalog.swift; sourceTree = "<group>"; };
 		54F0DA8464DE79544419CD3A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5590DE1A20E46E98A608EA5C /* TextInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInjector.swift; sourceTree = "<group>"; };
 		56013CEBE43C4583B4710451 /* PanelWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelWindowController.swift; sourceTree = "<group>"; };
@@ -52,10 +56,12 @@
 		8BCACEBC934E4D760EAD0D95 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
 		8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		9790279A9EFE3C89D67ACA1D /* AudioCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCaptureService.swift; sourceTree = "<group>"; };
+		A5501A94ECDE0184E08E054C /* ModelManagerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagerWindowController.swift; sourceTree = "<group>"; };
 		A7FBCCBEDC144B2798407D44 /* SarvamStreamingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SarvamStreamingClient.swift; sourceTree = "<group>"; };
 		AC76979B87CDA1BC982E64BF /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		BED2C120D59D645D18AD515B /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		DE144DCBB147676C72FB9C21 /* SessionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCoordinator.swift; sourceTree = "<group>"; };
+		E5ACCD4F822798A9ADFFA566 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		F4FDDC8BF02F1C6CF52E16AD /* LaunchAtLoginHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginHelper.swift; sourceTree = "<group>"; };
 		F84C8D0BA1165B0B222BF34D /* LikhoLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LikhoLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -90,6 +96,7 @@
 		5FA11CE4B6CDF6F778328B03 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				A5501A94ECDE0184E08E054C /* ModelManagerWindowController.swift */,
 				56013CEBE43C4583B4710451 /* PanelWindowController.swift */,
 				54F0DA8464DE79544419CD3A /* SettingsViewController.swift */,
 				0BB2E16CFAD7387B9FBE6858 /* StatusBarController.swift */,
@@ -130,6 +137,7 @@
 		A418CA859E1275EF59D4E47D /* Whisper */ = {
 			isa = PBXGroup;
 			children = (
+				E5ACCD4F822798A9ADFFA566 /* ModelManager.swift */,
 				5E21CF1359C8FAE3F0C6063C /* WhisperWrapper.swift */,
 			);
 			path = Whisper;
@@ -187,6 +195,7 @@
 			children = (
 				8E6E7A652D6E2E1069A083C5 /* AppSettings.swift */,
 				5FEE3FB43FFF6060935FEBD8 /* AppState.swift */,
+				5491351280D56C7607D303DA /* WhisperModelCatalog.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -275,6 +284,8 @@
 				E9221A439BCF9E732B9E1892 /* HotkeyManager.swift in Sources */,
 				5AD321EBF4BCC54D8919131E /* KeychainStore.swift in Sources */,
 				04D53E2C42914CFDCE94E111 /* LaunchAtLoginHelper.swift in Sources */,
+				738D5A4CD11684A9725F97F9 /* ModelManager.swift in Sources */,
+				9175D9DF8AE02606E99D18D5 /* ModelManagerWindowController.swift in Sources */,
 				06E1257DAB3E5CA2EF9DCA59 /* PanelWindowController.swift in Sources */,
 				7BA79D7BEAECFF5A128737DB /* PermissionManager.swift in Sources */,
 				BCAAD00EA9FF78619F7E8A02 /* SarvamEngine.swift in Sources */,
@@ -286,6 +297,7 @@
 				9132F9427A1FEBD71ABDD47D /* StatusBarController.swift in Sources */,
 				4EBCAD8B6D9FA28D3B7AC599 /* TextInjector.swift in Sources */,
 				5BAC2E867FACCF9DEBE9B27E /* TranscriptionEngine.swift in Sources */,
+				A3F7EB4DF735FB47C7011DDD /* WhisperModelCatalog.swift in Sources */,
 				FD7388557C01B021A334257D /* WhisperWrapper.swift in Sources */,
 				2F30CFCB2E0B4C3457AED1AD /* main.swift in Sources */,
 			);

@@ -58,6 +58,53 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 // The panel UI shows a warning row if Accessibility is missing.
             }
         }
+
+        // Whisper first-run: if the user is on the Whisper engine but has no
+        // model installed, prompt to download the recommended one. Deferred
+        // a tick so it doesn't fight with the microphone-permission alert.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.maybePromptForWhisperFirstRun()
+        }
+    }
+
+    /// First-run / fresh-install prompt for Whisper users who have no model.
+    /// No-ops if the engine isn't Whisper, or any model is already installed.
+    @MainActor
+    private func maybePromptForWhisperFirstRun() {
+        guard AppSettings.shared.engine == .whisper else { return }
+        guard ModelManager.shared.installedIDs.isEmpty else { return }
+
+        let model = WhisperModelCatalog.defaultModel
+        let alert = NSAlert()
+        alert.messageText = "Download a Whisper model"
+        alert.informativeText = """
+            LikhoLive uses Whisper to transcribe speech entirely on your Mac. \
+            We recommend starting with \(model.displayName) (\(model.sizeDisplay)).
+
+            You can download a different model any time from Settings → Whisper Models.
+            """
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "Download \(model.displayName)")
+        alert.addButton(withTitle: "Choose a Different Model…")
+        alert.addButton(withTitle: "Later")
+
+        switch alert.runModal() {
+        case .alertFirstButtonReturn:
+            Task {
+                do {
+                    try await ModelManager.shared.download(model.id)
+                } catch is CancellationError {
+                    // user cancelled, fine
+                } catch {
+                    let err = NSAlert(error: error)
+                    err.runModal()
+                }
+            }
+        case .alertSecondButtonReturn:
+            ModelManagerWindowController.shared.showAndFocus()
+        default:
+            break
+        }
     }
 
     func applicationWillTerminate(_ notification: Notification) {
